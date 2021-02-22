@@ -1,0 +1,693 @@
+[gd_scene load_steps=44 format=2]
+
+[ext_resource path="res://addons/visual_fsm/demos/simple_ai_character/vfsm_simple_ai_jumpter.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/demos/icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_state.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm.gd" type="Script" id=4]
+[ext_resource path="res://addons/visual_fsm/visual_fsm.gd" type="Script" id=5]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_trigger_script.gd" type="Script" id=6]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_trigger_timer.gd" type="Script" id=7]
+[ext_resource path="res://addons/visual_fsm/fsm/vfsm_trigger_action.gd" type="Script" id=8]
+
+[sub_resource type="GDScript" id=1]
+script/source = "# State: WalkingRight
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	jumper.get_node(\"CurrentMovingState\").text = name
+	jumper.move_x(1) # simulates x axis input
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 3 )
+vfsm_id = 1
+name = "WalkingRight"
+position = Vector2( 380, 60 )
+trigger_ids = [ 1, 5 ]
+custom_script = SubResource( 1 )
+
+[sub_resource type="GDScript" id=3]
+script/source = "# State: WalkingLeft
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	jumper.get_node(\"CurrentMovingState\").text = name
+	jumper.move_x(-1) # simulates x axis input
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 3 )
+vfsm_id = 2
+name = "WalkingLeft"
+position = Vector2( 400, 260 )
+trigger_ids = [ 2, 5 ]
+custom_script = SubResource( 3 )
+
+[sub_resource type="GDScript" id=5]
+script/source = "# Trigger: Gap detected
+extends VFSMTriggerBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	return false
+"
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 6 )
+vfsm_id = 0
+name = "Gap detected"
+custom_script = SubResource( 5 )
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 8 )
+vfsm_id = 1
+name = ""
+action_list = [ "ui_left" ]
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 8 )
+vfsm_id = 2
+name = ""
+action_list = [ "ui_right" ]
+
+[sub_resource type="GDScript" id=9]
+script/source = "# Trigger: Right obstacle detected
+extends VFSMTriggerBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	return jumper.is_impassable_in_front()
+"
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 6 )
+vfsm_id = 3
+name = "Right obstacle detected"
+custom_script = SubResource( 9 )
+
+[sub_resource type="GDScript" id=11]
+script/source = "# Trigger: Left obstacle detected
+extends VFSMTriggerBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	return jumper.left_step_detector.is_colliding()
+"
+
+[sub_resource type="Resource" id=12]
+script = ExtResource( 6 )
+vfsm_id = 4
+name = "Left obstacle detected"
+custom_script = SubResource( 11 )
+
+[sub_resource type="GDScript" id=13]
+script/source = "# Trigger: Impassable detected
+extends VFSMTriggerBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	return jumper.is_impassable_in_front()
+"
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 6 )
+vfsm_id = 5
+name = "Impassable detected"
+custom_script = SubResource( 13 )
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 4 )
+start_state_vfsm_id = 1
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 2 ), SubResource( 4 ) ]
+triggers = [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 10 ), SubResource( 12 ), SubResource( 14 ) ]
+transitions = [ 1, 1, 2, 1, 5, 2, 2, 2, 1, 2, 5, 1 ]
+
+[sub_resource type="GDScript" id=16]
+script/source = "# State: Grounded
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	jumper.get_node(\"CurrentAirState\").text = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 3 )
+vfsm_id = 0
+name = "Grounded"
+position = Vector2( 380, 100 )
+trigger_ids = [ 1, 4, 2 ]
+custom_script = SubResource( 16 )
+
+[sub_resource type="GDScript" id=18]
+script/source = "# State: Jumping
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	jumper.get_node(\"CurrentAirState\").text = name
+	jumper.jump()
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=19]
+script = ExtResource( 3 )
+vfsm_id = 1
+name = "Jumping"
+position = Vector2( 840, 100 )
+trigger_ids = [ 2 ]
+custom_script = SubResource( 18 )
+
+[sub_resource type="GDScript" id=20]
+script/source = "# State: Airborne
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	jumper.get_node(\"CurrentAirState\").text = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=21]
+script = ExtResource( 3 )
+vfsm_id = 2
+name = "Airborne"
+position = Vector2( 560, -100 )
+trigger_ids = [ 3 ]
+custom_script = SubResource( 20 )
+
+[sub_resource type="GDScript" id=22]
+script/source = "# State: Falling
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	jumper.get_node(\"CurrentAirState\").text = name
+
+
+func exit() -> void:
+	pass
+"
+
+[sub_resource type="Resource" id=23]
+script = ExtResource( 3 )
+vfsm_id = 3
+name = "Falling"
+position = Vector2( 380, 380 )
+trigger_ids = [ 3 ]
+custom_script = SubResource( 22 )
+
+[sub_resource type="Resource" id=24]
+script = ExtResource( 7 )
+vfsm_id = 0
+name = ""
+duration = 1
+
+[sub_resource type="GDScript" id=25]
+script/source = "# Trigger: Gap detected
+extends VFSMTriggerBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	return jumper.is_gap_in_front()
+"
+
+[sub_resource type="Resource" id=26]
+script = ExtResource( 6 )
+vfsm_id = 1
+name = "Gap detected"
+custom_script = SubResource( 25 )
+
+[sub_resource type="GDScript" id=27]
+script/source = "# Trigger: Left ground
+extends VFSMTriggerBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	return not jumper.is_on_floor()
+"
+
+[sub_resource type="Resource" id=28]
+script = ExtResource( 6 )
+vfsm_id = 2
+name = "Left ground"
+custom_script = SubResource( 27 )
+
+[sub_resource type="GDScript" id=29]
+script/source = "# Trigger: Landed
+extends VFSMTriggerBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	return jumper.is_on_floor()
+"
+
+[sub_resource type="Resource" id=30]
+script = ExtResource( 6 )
+vfsm_id = 3
+name = "Landed"
+custom_script = SubResource( 29 )
+
+[sub_resource type="GDScript" id=31]
+script/source = "# Trigger: Jumpable obstacle
+extends VFSMTriggerBase
+
+
+func enter() -> void:
+	pass
+
+
+func is_triggered(_object, _delta: float) -> bool:
+	var jumper := _object as VFSMDemoSimpleAIJumper
+	return jumper.is_jumpable_in_front()
+"
+
+[sub_resource type="Resource" id=32]
+script = ExtResource( 6 )
+vfsm_id = 4
+name = "Jumpable obstacle"
+custom_script = SubResource( 31 )
+
+[sub_resource type="Resource" id=33]
+script = ExtResource( 4 )
+start_state_vfsm_id = 0
+start_position = Vector2( 100, 100 )
+states = [ SubResource( 17 ), SubResource( 19 ), SubResource( 21 ), SubResource( 23 ) ]
+triggers = [ SubResource( 24 ), SubResource( 26 ), SubResource( 28 ), SubResource( 30 ), SubResource( 32 ) ]
+transitions = [ 0, 1, 1, 0, 4, 1, 0, 2, 3, 1, 2, 2, 2, 3, 0, 3, 3, 0 ]
+
+[sub_resource type="CapsuleShape2D" id=34]
+radius = 29.1352
+height = 3.62146
+
+[sub_resource type="RectangleShape2D" id=35]
+extents = Vector2( 30.7244, 31.4757 )
+
+[node name="World" type="Node2D"]
+
+[node name="Instructions" type="Label" parent="."]
+margin_left = -31.2875
+margin_top = -152.816
+margin_right = 228.712
+margin_bottom = -104.816
+text = "Press left/right to change direction.
+Automatically changes direction in front of impassable obstacles
+Will jump automatically over small obstacles and gaps"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SimpleAIJumper" type="KinematicBody2D" parent="."]
+position = Vector2( 0, 6.35678 )
+collision_mask = 2
+script = ExtResource( 1 )
+speed = 50.0
+jump_speed = 80.0
+gravity = 98.0
+
+[node name="MovementFSM" type="Node" parent="SimpleAIJumper"]
+script = ExtResource( 5 )
+finite_state_machine = SubResource( 15 )
+
+[node name="JumpingFSM" type="Node" parent="SimpleAIJumper"]
+script = ExtResource( 5 )
+finite_state_machine = SubResource( 33 )
+
+[node name="Sprite" type="Sprite" parent="SimpleAIJumper"]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SimpleAIJumper"]
+shape = SubResource( 34 )
+
+[node name="Camera2D" type="Camera2D" parent="SimpleAIJumper"]
+current = true
+
+[node name="RightGapDetector" type="RayCast2D" parent="SimpleAIJumper"]
+position = Vector2( 10, 0 )
+enabled = true
+cast_to = Vector2( 0, 75 )
+collision_mask = 2
+
+[node name="LeftGapDetector" type="RayCast2D" parent="SimpleAIJumper"]
+position = Vector2( -10, 0 )
+enabled = true
+cast_to = Vector2( 0, 75 )
+collision_mask = 2
+
+[node name="LeftBottom" type="RayCast2D" parent="SimpleAIJumper"]
+position = Vector2( 0, 15 )
+enabled = true
+cast_to = Vector2( -40, 0 )
+collision_mask = 2
+
+[node name="RightBottom" type="RayCast2D" parent="SimpleAIJumper"]
+position = Vector2( 0, 15 )
+enabled = true
+cast_to = Vector2( 40, 0 )
+collision_mask = 2
+
+[node name="LeftMiddle" type="RayCast2D" parent="SimpleAIJumper"]
+enabled = true
+cast_to = Vector2( -40, 0 )
+collision_mask = 2
+
+[node name="RightMiddle" type="RayCast2D" parent="SimpleAIJumper"]
+enabled = true
+cast_to = Vector2( 40, 0 )
+collision_mask = 2
+
+[node name="CurrentMovingState" type="Label" parent="SimpleAIJumper"]
+margin_left = -31.1127
+margin_top = -69.3762
+margin_right = 8.88728
+margin_bottom = -55.3762
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentAirState" type="Label" parent="SimpleAIJumper"]
+margin_left = -31.1127
+margin_top = -49.3762
+margin_right = 8.88728
+margin_bottom = -35.3762
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 0, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D14" type="StaticBody2D" parent="Platforms"]
+position = Vector2( -59.4603, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D14"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D14"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D15" type="StaticBody2D" parent="Platforms"]
+position = Vector2( -178.381, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D15"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D15"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D16" type="StaticBody2D" parent="Platforms"]
+position = Vector2( -235.463, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D16"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D16"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D17" type="StaticBody2D" parent="Platforms"]
+position = Vector2( -287.788, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D17"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D17"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D18" type="StaticBody2D" parent="Platforms"]
+position = Vector2( -287.788, 5.21459 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D18"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D18"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 61.3316, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D2"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D2"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 119.983, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D3"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D3"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 247.93, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D4"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D4"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D20" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 1048.46, 166.568 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D20"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D20"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D21" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 1048.46, 107.705 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D21"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D21"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 308.511, 62.2965 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D5"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D5"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 365.529, 81.4378 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D6"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D6"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 427.065, 82.3549 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D7"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D7"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 477.846, 102.846 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D8"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D8"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 649.664, 145.705 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D9"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D9"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D10" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 711.082, 145.705 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D10"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D10"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D11" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 834.917, 145.705 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D11"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D11"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D19" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 536.485, 121.894 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D19"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D19"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D12" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 933.032, 165.803 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D12"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D12"]
+shape = SubResource( 35 )
+
+[node name="StaticBody2D13" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 993.613, 165.803 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Platforms/StaticBody2D13"]
+modulate = Color( 0.129412, 0.933333, 0.0156863, 1 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StaticBody2D13"]
+shape = SubResource( 35 )

@@ -1,0 +1,105 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Resource",
+"class": "VFSM",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/fsm/vfsm.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "VFSMDemoSimpleAIJumper",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/demos/simple_ai_character/vfsm_simple_ai_jumpter.gd"
+}, {
+"base": "Node2D",
+"class": "VFSMDemoTrafficLightsController",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/demos/simple_traffic_lights/traffic_lights.gd"
+}, {
+"base": "Node",
+"class": "VFSMSingleton",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/vfsm_singleton.gd"
+}, {
+"base": "Resource",
+"class": "VFSMState",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/fsm/vfsm_state.gd"
+}, {
+"base": "Object",
+"class": "VFSMStateBase",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/resources/vfsm_state_base.gd"
+}, {
+"base": "GraphNode",
+"class": "VFSMStateNode",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/editor/vfsm_state_graph_node.gd"
+}, {
+"base": "Resource",
+"class": "VFSMTrigger",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/fsm/vfsm_trigger.gd"
+}, {
+"base": "VFSMTrigger",
+"class": "VFSMTriggerAction",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/fsm/vfsm_trigger_action.gd"
+}, {
+"base": "Object",
+"class": "VFSMTriggerBase",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/resources/vfsm_trigger_base.gd"
+}, {
+"base": "PanelContainer",
+"class": "VFSMTriggerGraphSlot",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/editor/vfsm_trigger_graph_slot.gd"
+}, {
+"base": "VFSMTrigger",
+"class": "VFSMTriggerScript",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/fsm/vfsm_trigger_script.gd"
+}, {
+"base": "VFSMTrigger",
+"class": "VFSMTriggerTimer",
+"language": "GDScript",
+"path": "res://addons/visual_fsm/fsm/vfsm_trigger_timer.gd"
+} ]
+_global_script_class_icons={
+"VFSM": "",
+"VFSMDemoSimpleAIJumper": "",
+"VFSMDemoTrafficLightsController": "",
+"VFSMSingleton": "",
+"VFSMState": "",
+"VFSMStateBase": "",
+"VFSMStateNode": "",
+"VFSMTrigger": "",
+"VFSMTriggerAction": "",
+"VFSMTriggerBase": "",
+"VFSMTriggerGraphSlot": "",
+"VFSMTriggerScript": "",
+"VFSMTriggerTimer": ""
+}
+
+[application]
+
+config/name="Project View"
+config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "project_view", "visual_fsm", "zylann.project_stats" )
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+environment/default_environment="res://default_env.tres"

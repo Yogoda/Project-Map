@@ -1,0 +1,14 @@
+# State: %s
+extends VFSMStateBase
+
+
+func enter() -> void:
+	pass
+
+
+func update(_object, _delta: float) -> void:
+	pass
+
+
+func exit() -> void:
+	pass

@@ -1,0 +1,345 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://addons/visual_fsm/editor/dialogs/vfsm_new_scripted_trigger_dialog.gd" type="Script" id=1]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_graph_edit.gd" type="Script" id=2]
+[ext_resource path="res://addons/visual_fsm/editor/dialogs/vfsm_new_state_dialog.gd" type="Script" id=3]
+[ext_resource path="res://addons/visual_fsm/editor/dialogs/vfsm_set_timer_dialog.gd" type="Script" id=4]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=5]
+[ext_resource path="res://addons/visual_fsm/editor/dialogs/vfsm_set_input_trigger_dialog.gd" type="Script" id=6]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_editor.gd" type="Script" id=7]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.113725, 0.113725, 0.117647, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.113725, 0.113725, 0.117647, 1 )
+
+[node name="VisualFSMEditor" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 384 )
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VFSMGraphEdit" type="GraphEdit" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/port_grab_distance_vertical = 24
+custom_constants/port_grab_distance_horizontal = 32
+custom_constants/bezier_len_neg = 600
+right_disconnects = true
+script = ExtResource( 2 )
+
+[node name="DialogLayer" type="CanvasLayer" parent="."]
+
+[node name="NewScriptTriggerDialog" type="ConfirmationDialog" parent="DialogLayer"]
+anchor_left = 0.000976562
+anchor_right = 0.000976562
+anchor_bottom = 0.00333333
+margin_left = 329.0
+margin_top = 230.0
+margin_right = 693.0
+margin_bottom = 368.0
+rect_min_size = Vector2( 350, 70 )
+window_title = "New event"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+script_icon = ExtResource( 5 )
+
+[node name="Margins" type="MarginContainer" parent="DialogLayer/NewScriptTriggerDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 356.0
+margin_bottom = 104.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="VBoxContainer" parent="DialogLayer/NewScriptTriggerDialog/Margins"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 332.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TriggerName" type="LineEdit" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content"]
+margin_right = 316.0
+margin_bottom = 24.0
+placeholder_text = "Event name"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Prompt" type="PanelContainer" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content"]
+margin_top = 34.0
+margin_right = 316.0
+margin_bottom = 68.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Margin" type="MarginContainer" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content/Prompt"]
+margin_right = 316.0
+margin_bottom = 34.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content/Prompt/Margin"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 306.0
+margin_bottom = 24.0
+custom_constants/separation = 5
+
+[node name="Name" type="Label" parent="DialogLayer/NewScriptTriggerDialog/Margins/Content/Prompt/Margin/VBox"]
+margin_right = 296.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "Trigger must have a name."
+valign = 1
+
+[node name="NewStateDialog" type="ConfirmationDialog" parent="DialogLayer"]
+anchor_left = 0.000976562
+anchor_right = 0.000976562
+anchor_bottom = 0.00333333
+margin_left = 329.0
+margin_top = 229.0
+margin_right = 679.0
+margin_bottom = 371.0
+rect_min_size = Vector2( 350, 160 )
+window_title = "New state"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Margins" type="MarginContainer" parent="DialogLayer/NewStateDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 342.0
+margin_bottom = 124.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="VBoxContainer" parent="DialogLayer/NewStateDialog/Margins"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 318.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StateName" type="LineEdit" parent="DialogLayer/NewStateDialog/Margins/Content"]
+margin_right = 302.0
+margin_bottom = 24.0
+placeholder_text = "State name"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Prompt" type="PanelContainer" parent="DialogLayer/NewStateDialog/Margins/Content"]
+margin_top = 34.0
+margin_right = 302.0
+margin_bottom = 68.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="Margin" type="MarginContainer" parent="DialogLayer/NewStateDialog/Margins/Content/Prompt"]
+margin_right = 302.0
+margin_bottom = 34.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Name" type="Label" parent="DialogLayer/NewStateDialog/Margins/Content/Prompt/Margin"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 292.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "State must have a name."
+valign = 1
+autowrap = true
+
+[node name="TimerDurationDialog" type="AcceptDialog" parent="DialogLayer"]
+margin_right = 181.0
+margin_bottom = 100.0
+window_title = "Set timer duration"
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Margins" type="MarginContainer" parent="DialogLayer/TimerDurationDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 173.0
+margin_bottom = 64.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="HBoxContainer" parent="DialogLayer/TimerDurationDialog/Margins"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 149.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Duration" type="LineEdit" parent="DialogLayer/TimerDurationDialog/Margins/Content"]
+margin_right = 101.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Seconds" type="Label" parent="DialogLayer/TimerDurationDialog/Margins/Content"]
+margin_left = 111.0
+margin_top = 5.0
+margin_right = 133.0
+margin_bottom = 19.0
+text = "sec"
+
+[node name="InputActionDialog" type="AcceptDialog" parent="DialogLayer"]
+margin_right = 306.0
+margin_bottom = 368.0
+window_title = "Select input actions"
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Margins" type="MarginContainer" parent="DialogLayer/InputActionDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 298.0
+margin_bottom = 332.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="VBoxContainer" parent="DialogLayer/InputActionDialog/Margins"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 274.0
+margin_bottom = 308.0
+custom_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="DialogLayer/InputActionDialog/Margins/Content"]
+margin_right = 258.0
+margin_bottom = 24.0
+custom_constants/separation = 10
+
+[node name="FilterMargins" type="MarginContainer" parent="DialogLayer/InputActionDialog/Margins/Content/Header"]
+margin_right = 141.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Filter" type="LineEdit" parent="DialogLayer/InputActionDialog/Margins/Content/Header/FilterMargins"]
+margin_right = 141.0
+margin_bottom = 24.0
+placeholder_text = "Filter actions"
+
+[node name="ClearButton" type="Button" parent="DialogLayer/InputActionDialog/Margins/Content/Header"]
+margin_left = 151.0
+margin_right = 258.0
+margin_bottom = 24.0
+text = "Clear selection"
+
+[node name="ActionContainer" type="ScrollContainer" parent="DialogLayer/InputActionDialog/Margins/Content"]
+margin_top = 34.0
+margin_right = 258.0
+margin_bottom = 248.0
+size_flags_vertical = 3
+
+[node name="Margins" type="MarginContainer" parent="DialogLayer/InputActionDialog/Margins/Content/ActionContainer"]
+margin_right = 258.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Actions" type="VBoxContainer" parent="DialogLayer/InputActionDialog/Margins/Content/ActionContainer/Margins"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 248.0
+margin_bottom = 10.0
+size_flags_horizontal = 3
+
+[node name="ValidationPanel" type="PanelContainer" parent="DialogLayer/InputActionDialog/Margins/Content"]
+margin_top = 258.0
+margin_right = 258.0
+margin_bottom = 292.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogLayer/InputActionDialog/Margins/Content/ValidationPanel"]
+margin_right = 258.0
+margin_bottom = 34.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="DialogLayer/InputActionDialog/Margins/Content/ValidationPanel/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 248.0
+margin_bottom = 24.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "Select at least one action"
+[connection signal="_end_node_move" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_end_node_move"]
+[connection signal="connection_request" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_connection_request"]
+[connection signal="connection_to_empty" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_connection_to_empty"]
+[connection signal="disconnection_request" from="VFSMGraphEdit" to="VFSMGraphEdit" method="_on_disconnection_request"]
+[connection signal="confirmed" from="DialogLayer/NewScriptTriggerDialog" to="DialogLayer/NewScriptTriggerDialog" method="_on_confirmed"]
+[connection signal="new_trigger_created" from="DialogLayer/NewScriptTriggerDialog" to="VFSMGraphEdit" method="_on_Dialog_new_trigger_created"]
+[connection signal="trigger_name_request" from="DialogLayer/NewScriptTriggerDialog" to="VFSMGraphEdit" method="_on_Dialog_trigger_name_request"]
+[connection signal="text_changed" from="DialogLayer/NewScriptTriggerDialog/Margins/Content/TriggerName" to="DialogLayer/NewScriptTriggerDialog" method="_on_TriggerName_text_changed"]
+[connection signal="confirmed" from="DialogLayer/NewStateDialog" to="DialogLayer/NewStateDialog" method="_on_confirmed"]
+[connection signal="state_name_request" from="DialogLayer/NewStateDialog" to="VFSMGraphEdit" method="_on_StateCreateDialog_state_name_request"]
+[connection signal="text_changed" from="DialogLayer/NewStateDialog/Margins/Content/StateName" to="DialogLayer/NewStateDialog" method="_on_StateName_text_changed"]
+[connection signal="confirmed" from="DialogLayer/TimerDurationDialog" to="DialogLayer/TimerDurationDialog" method="_on_confirmed"]
+[connection signal="text_changed" from="DialogLayer/TimerDurationDialog/Margins/Content/Duration" to="DialogLayer/TimerDurationDialog" method="_on_Duration_text_changed"]
+[connection signal="confirmed" from="DialogLayer/InputActionDialog" to="DialogLayer/InputActionDialog" method="_on_confirmed"]
+[connection signal="text_changed" from="DialogLayer/InputActionDialog/Margins/Content/Header/FilterMargins/Filter" to="DialogLayer/InputActionDialog" method="_on_Filter_text_changed"]
+[connection signal="pressed" from="DialogLayer/InputActionDialog/Margins/Content/Header/ClearButton" to="DialogLayer/InputActionDialog" method="_on_ClearButton_pressed"]

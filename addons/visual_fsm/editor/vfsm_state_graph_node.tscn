@@ -1,0 +1,99 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_timer.svg" type="Texture" id=1]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_joypad.svg" type="Texture" id=2]
+[ext_resource path="res://addons/visual_fsm/resources/icons/icon_script.svg" type="Texture" id=3]
+[ext_resource path="res://addons/visual_fsm/editor/vfsm_state_graph_node.gd" type="Script" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.0156863, 0.113725, 0.235294, 1 )
+
+[node name="VFSMStateGraphNode" type="GraphNode"]
+margin_right = 200.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 9
+size_flags_vertical = 9
+custom_constants/port_offset = 0
+custom_constants/separation = 8
+show_close = true
+resizable = true
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 0.5, 0.31, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+timer_icon = ExtResource( 1 )
+action_icon = ExtResource( 2 )
+script_icon = ExtResource( 3 )
+
+[node name="TitlePanel" type="PanelContainer" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 184.0
+margin_bottom = 48.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="HBox" type="HBoxContainer" parent="TitlePanel"]
+margin_right = 168.0
+margin_bottom = 24.0
+
+[node name="Margins" type="MarginContainer" parent="TitlePanel/HBox"]
+margin_right = 136.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 8
+custom_constants/margin_left = 10
+
+[node name="Name" type="Label" parent="TitlePanel/HBox/Margins"]
+margin_left = 10.0
+margin_right = 128.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+text = "State name"
+valign = 1
+
+[node name="Script" type="Button" parent="TitlePanel/HBox"]
+margin_left = 140.0
+margin_right = 168.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 24 )
+icon = ExtResource( 3 )
+
+[node name="BottomPanel" type="PanelContainer" parent="."]
+margin_left = 16.0
+margin_top = 56.0
+margin_right = 184.0
+margin_bottom = 76.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="AddTriggerDropdown" type="MenuButton" parent="BottomPanel"]
+margin_right = 168.0
+margin_bottom = 20.0
+text = "Add trigger"
+flat = false
+expand_icon = true
+switch_on_hover = true
+[connection signal="close_request" from="." to="." method="_on_StateGraphNode_close_request"]
+[connection signal="resize_request" from="." to="." method="_on_StateGraphNode_resize_request"]
+[connection signal="pressed" from="TitlePanel/HBox/Script" to="." method="_on_Script_pressed"]
+[connection signal="about_to_show" from="BottomPanel/AddTriggerDropdown" to="." method="_on_AddTriggerDropdown_about_to_show"]

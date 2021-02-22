@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends GraphEdit
+
+func can_drop_data(position, data):
+	return true
+
+func drop_data(pos, data):
+	
+	print(\"drop data \", data, \" at \", pos)"
+
+[node name="GraphEdit" type="GraphEdit"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+rect_min_size = Vector2( 500, 500 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_offset = Vector2( -500, -100 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
