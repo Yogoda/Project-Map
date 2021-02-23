@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/project_view/graph_node.gd" type="Script" id=1]
+[ext_resource path="res://addons/project_view/node.stylebox" type="StyleBox" id=2]
+
+[node name="GraphNode" type="GraphNode"]
+margin_left = 500.0
+margin_top = 100.0
+margin_right = 760.0
+margin_bottom = 128.0
+mouse_filter = 1
+custom_styles/frame = ExtResource( 2 )
+custom_styles/selectedframe = ExtResource( 2 )
+custom_constants/port_offset = 1
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 258.0
+margin_bottom = 16.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_right = 25.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "test"

@@ -93,6 +93,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Project View"
+run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]

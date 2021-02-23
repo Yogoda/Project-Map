@@ -8,7 +8,7 @@ func _enter_tree():
 	# When this plugin node enters tree, add the custom type
 #	dock = 
 #	add_control_to_dock( DOCK_SLOT_LEFT_UL, dock )
-	get_tree().set_meta("__editor_interface", get_editor_interface())
+#	get_tree().set_meta("__editor_interface", get_editor_interface())
 	get_editor_interface().get_editor_viewport().add_child(dock)
 	dock.visible = false
 	
@@ -22,7 +22,7 @@ func has_main_screen():
 	return true
 
 func get_plugin_name():
-	return "ProjectView"
+	return "Project View"
 
 func make_visible(visible):
 	dock.visible = visible
