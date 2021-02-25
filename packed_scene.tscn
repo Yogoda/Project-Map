@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://addons/project_view/graph_edit.gd" type="Script" id=1]
+[ext_resource path="res://addons/project_view/graph_node.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/project_view/graph_node.gd" type="Script" id=3]
+[ext_resource path="res://addons/project_view/node.stylebox" type="StyleBox" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.2, 0.231373, 0.309804, 1 )
+
+[node name="GraphEdit" type="GraphEdit"]
+margin_right = 851.0
+margin_bottom = 685.0
+rect_min_size = Vector2( 500, 500 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg = SubResource( 1 )
+scroll_offset = Vector2( -159, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnSave" type="Button" parent="."]
+margin_left = 235.463
+margin_top = 14.2705
+margin_right = 276.463
+margin_bottom = 34.2705
+pressed = true
+text = "save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GraphNode" type="GraphNode" parent="." instance=ExtResource( 2 )]
+margin_left = 219.0
+margin_top = 280.0
+margin_right = 377.0
+margin_bottom = 312.0
+mouse_filter = 1
+custom_styles/frame = ExtResource( 4 )
+custom_styles/selectedframe = ExtResource( 4 )
+custom_constants/port_offset = 0
+offset = Vector2( 60, 280 )
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GraphNode2" type="GraphNode" parent="." instance=ExtResource( 2 )]
+margin_left = 263.0
+margin_top = 432.0
+margin_right = 448.0
+margin_bottom = 464.0
+mouse_filter = 1
+custom_styles/frame = ExtResource( 4 )
+custom_styles/selectedframe = ExtResource( 4 )
+custom_constants/port_offset = 0
+offset = Vector2( 104, 432 )
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GraphNode3" type="GraphNode" parent="." instance=ExtResource( 2 )]
+margin_left = 309.0
+margin_top = 502.0
+margin_right = 532.0
+margin_bottom = 534.0
+mouse_filter = 1
+custom_styles/frame = ExtResource( 4 )
+custom_styles/selectedframe = ExtResource( 4 )
+custom_constants/port_offset = 0
+offset = Vector2( 150, 502 )
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="BtnSave" to="." method="_on_BtnSave_pressed"]

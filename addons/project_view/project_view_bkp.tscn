@@ -1,19 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://scene_3d.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/project_view/graph_edit.gd" type="Script" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.2, 0.231373, 0.309804, 1 )
 
 [node name="GraphEdit" type="GraphEdit"]
-margin_right = 932.0
-margin_bottom = 685.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
 rect_min_size = Vector2( 500, 500 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/bg = SubResource( 1 )
-scroll_offset = Vector2( -93, 0 )
+scroll_offset = Vector2( -6.10352e-05, 0 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -28,7 +29,4 @@ text = "save"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Spatial" parent="." instance=ExtResource( 1 )]
-[connection signal="delete_nodes_request" from="." to="." method="_on_GraphEdit_delete_nodes_request"]
 [connection signal="pressed" from="BtnSave" to="." method="_on_BtnSave_pressed"]

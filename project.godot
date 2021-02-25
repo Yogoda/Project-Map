@@ -96,9 +96,13 @@ config/name="Project View"
 run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Plugin="*res://addons/project_view/plugin.gd"
+
 [editor_plugins]
 
-enabled=PoolStringArray( "project_view", "visual_fsm", "zylann.project_stats" )
+enabled=PoolStringArray( "editor_icon_previewer", "project_view", "visual_fsm", "zylann.project_stats" )
 
 [rendering]
 
