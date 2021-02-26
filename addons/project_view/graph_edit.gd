@@ -3,8 +3,11 @@ extends GraphEdit
 
 var graph_node = load("res://addons/project_view/graph_node.tscn")
 
+var dirty = false
+
 func _ready():
 	snap_distance = 32
+	$Dirty.hide()
 
 func can_drop_data(position, data):
 	return true
@@ -28,18 +31,34 @@ func drop_data(pos, data):
 	node.owner = self
 
 	node.init()
+	
+	dirty = true
+	$Dirty.show()
 
 func _on_BtnSave_pressed():
 	
-	var packed_scene:PackedScene = PackedScene.new()
+	save()
 	
-	packed_scene.pack(self)
+func save():
 	
-#	print("save scene")
-#	print("owner ", owner)
+	if dirty:
+	
+		var packed_scene:PackedScene = PackedScene.new()
+		
+		packed_scene.pack(self)
 
-	ResourceSaver.save("res://addons/project_view/project_view.tscn", packed_scene)
-
+		ResourceSaver.save("res://addons/project_view/project_view.tscn", packed_scene)
+		
+		print("project view saved")
+		dirty = false
+		$Dirty.hide()
+	
 
 func _on_GraphEdit_delete_nodes_request():
 	print("delete node request??")
+
+func _on_GraphEdit__end_node_move():
+	
+	dirty = true
+	$Dirty.show()
+	

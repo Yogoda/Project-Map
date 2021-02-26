@@ -5,13 +5,6 @@ extends GraphNode
 export var path:String
 export var file_name:String
 
-const icn_scene = preload("res://addons/project_view/icons/packed_scene.svg")
-const icn_script = preload("res://addons/project_view/icons/script.svg")
-const icn_node = preload("res://addons/project_view/icons/node.svg")
-const icn_control = preload("res://addons/project_view/icons/control.svg")
-const icn_node2D = preload("res://addons/project_view/icons/node_2d.svg")
-const icn_node3D = preload("res://addons/project_view/icons/node_3d.svg")
-
 enum {EDITOR_2D, EDITOR_3D, EDITOR_SCRIPT, EDITOR_OTHER}
 
 var editor = EDITOR_2D

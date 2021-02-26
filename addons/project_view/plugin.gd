@@ -27,8 +27,10 @@ func get_plugin_name():
 func make_visible(visible):
 	dock.visible = visible
 
-func apply_changes():
-	
-	print("request save plugin")
-	
+#func apply_changes():
+#
 #	dock.save()
+
+func save_external_data():
+	
+	dock.save()
