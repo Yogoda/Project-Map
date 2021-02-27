@@ -1,24 +1,25 @@
 tool
 extends GraphEdit
 
-var graph_node = load("res://addons/project_view/graph_node.tscn")
+var graph_node = load("res://addons/project_map/pm_file_node.tscn")
 
 var dirty = false
 
 func _ready():
+	
 	snap_distance = 32
-	$Dirty.hide()
+
 
 func can_drop_data(position, data):
 	return true
 
+
 func drop_data(pos, data):
-	
-#	print("drop data ", data, " at ", pos)
 	
 	var node:GraphNode = graph_node.instance()
 	
 	#set exported variables before adding to tree
+	#to be able to save script data
 	var path:String = data.files[0]
 	node.path = path
 	var offset = scroll_offset + pos
@@ -30,15 +31,16 @@ func drop_data(pos, data):
 	add_child(node)
 	node.owner = self
 
-	node.init()
+	node.init(path)
 	
 	dirty = true
-	$Dirty.show()
+
 
 func _on_BtnSave_pressed():
 	
 	save()
-	
+
+
 func save():
 	
 	if dirty:
@@ -47,18 +49,20 @@ func save():
 		
 		packed_scene.pack(self)
 
-		ResourceSaver.save("res://addons/project_view/project_view.tscn", packed_scene)
+		ResourceSaver.save("res://addons/project_map/project_map.tscn", packed_scene)
 		
-		print("project view saved")
 		dirty = false
-		$Dirty.hide()
-	
+
 
 func _on_GraphEdit_delete_nodes_request():
-	print("delete node request??")
+	
+	for child in get_children():
+		if child is GraphNode:
+			if child.selected:
+				child.queue_free()
+
 
 func _on_GraphEdit__end_node_move():
 	
 	dirty = true
-	$Dirty.show()
-	
+

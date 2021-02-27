@@ -92,17 +92,13 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Project View"
+config/name="Project Map"
 run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-Plugin="*res://addons/project_view/plugin.gd"
-
 [editor_plugins]
 
-enabled=PoolStringArray( "editor_icon_previewer", "project_view", "visual_fsm", "zylann.project_stats" )
+enabled=PoolStringArray( "editor_icon_previewer", "project_map", "visual_fsm", "zylann.project_stats" )
 
 [rendering]
 
