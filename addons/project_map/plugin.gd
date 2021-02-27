@@ -15,6 +15,12 @@ func _exit_tree():
 	get_editor_interface().get_editor_viewport().remove_child(project_map)
 	project_map.queue_free()
 
+func _input(event):
+
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_SPACE && event.control:
+			get_editor_interface().set_main_screen_editor("Project")
+
 
 func has_main_screen():
 	return true

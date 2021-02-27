@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://addons/project_map/pm_file_node.gd" type="Script" id=1]
 [ext_resource path="res://addons/project_map/project_map.gd" type="Script" id=2]
 [ext_resource path="res://addons/project_map/pm_file_node.tscn" type="PackedScene" id=3]
 
@@ -124,136 +123,64 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GraphNode4" type="GraphNode" parent="." instance=ExtResource( 3 )]
+[node name="GraphNode4" parent="." instance=ExtResource( 3 )]
 margin_left = 135.0
 margin_top = 170.0
 margin_right = 301.0
 margin_bottom = 202.0
-mouse_filter = 1
 custom_styles/frame = SubResource( 2 )
 custom_styles/selectedframe = SubResource( 3 )
-custom_constants/port_offset = 0
 offset = Vector2( 0, 128 )
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 path = "res://scene_control.tscn"
 
-[node name="GraphNode5" type="GraphNode" parent="." instance=ExtResource( 3 )]
+[node name="GraphNode5" parent="." instance=ExtResource( 3 )]
 margin_left = 135.0
 margin_top = 106.0
 margin_right = 243.0
 margin_bottom = 138.0
-mouse_filter = 1
 custom_styles/frame = SubResource( 2 )
 custom_styles/selectedframe = SubResource( 3 )
-custom_constants/port_offset = 0
 offset = Vector2( 0, 64 )
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 path = "res://main.tscn"
 
-[node name="GraphNode" type="GraphNode" parent="." instance=ExtResource( 3 )]
+[node name="GraphNode" parent="." instance=ExtResource( 3 )]
 margin_left = 135.0
 margin_top = 234.0
 margin_right = 287.0
 margin_bottom = 296.0
-mouse_filter = 1
 custom_styles/frame = SubResource( 4 )
 custom_styles/selectedframe = SubResource( 5 )
-custom_constants/port_offset = 0
 offset = Vector2( 0, 192 )
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 path = "res://scene_3d.tscn"
 
-[node name="GraphNode6" type="GraphNode" parent="." instance=ExtResource( 3 )]
+[node name="GraphNode6" parent="." instance=ExtResource( 3 )]
 margin_left = 135.0
 margin_top = 298.0
 margin_right = 287.0
 margin_bottom = 360.0
-mouse_filter = 1
 custom_styles/frame = SubResource( 6 )
 custom_styles/selectedframe = SubResource( 7 )
-custom_constants/port_offset = 0
 offset = Vector2( 0, 256 )
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 path = "res://scene_3d.tscn"
 
-[node name="GraphNode2" type="GraphNode" parent="." instance=ExtResource( 3 )]
+[node name="GraphNode2" parent="." instance=ExtResource( 3 )]
 margin_left = 295.0
 margin_top = 234.0
 margin_right = 460.0
 margin_bottom = 266.0
-mouse_filter = 1
 custom_styles/frame = SubResource( 2 )
 custom_styles/selectedframe = SubResource( 3 )
-custom_constants/port_offset = 0
 offset = Vector2( 160, 192 )
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 path = "res://scene_3d_cube.gd"
 
-[node name="GraphNode3" type="GraphNode" parent="." instance=ExtResource( 3 )]
+[node name="GraphNode3" parent="." instance=ExtResource( 3 )]
 margin_left = 295.0
 margin_top = 298.0
 margin_right = 470.0
 margin_bottom = 360.0
-mouse_filter = 1
 custom_styles/frame = SubResource( 4 )
 custom_styles/selectedframe = SubResource( 5 )
-custom_constants/port_offset = 0
 offset = Vector2( 160, 256 )
-slot/0/left_enabled = false
-slot/0/left_type = 0
-slot/0/left_color = Color( 1, 1, 1, 1 )
-slot/0/right_enabled = false
-slot/0/right_type = 0
-slot/0/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 path = "res://scene_3d_cube.tscn"
 [connection signal="_end_node_move" from="." to="." method="_on_GraphEdit__end_node_move"]
 [connection signal="delete_nodes_request" from="." to="." method="_on_GraphEdit_delete_nodes_request"]
