@@ -5,15 +5,18 @@ var project_map = load("res://addons/project_map/project_map.tscn").instance()
 
 func _enter_tree():
 	
-#	add_control_to_project_map( project_map_SLOT_LEFT_UL, project_map )
 	get_tree().set_meta("__editor_interface", get_editor_interface())
 	get_editor_interface().get_editor_viewport().add_child(project_map)
 	project_map.visible = false
 
+
 func _exit_tree():
+	
+	project_map.save()
 
 	get_editor_interface().get_editor_viewport().remove_child(project_map)
 	project_map.queue_free()
+
 
 func _input(event):
 
@@ -37,9 +40,11 @@ func get_plugin_icon():
 func make_visible(visible):
 	project_map.visible = visible
 
+
 func apply_changes():
 
 	project_map.save()
+
 
 func save_external_data():
 	
