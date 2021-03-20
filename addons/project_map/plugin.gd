@@ -1,11 +1,20 @@
 tool
 extends EditorPlugin
 
-var project_map = load("res://addons/project_map/project_map.tscn").instance()
+var project_map
+var project_map_path = "res://addons/project_map/project_map.tscn"
+var project_map_save_path = "res://addons/project_map/project_map_save.tscn"
 
 func _enter_tree():
 	
 	get_tree().set_meta("__editor_interface", get_editor_interface())
+	
+	var file_save = File.new()
+	if file_save.file_exists(project_map_save_path):
+		project_map = load(project_map_save_path).instance()
+	else:
+		project_map = load(project_map_path).instance()
+	
 	get_editor_interface().get_editor_viewport().add_child(project_map)
 	project_map.visible = false
 

@@ -3,7 +3,7 @@
 [ext_resource path="res://addons/project_map/pm_file_node.gd" type="Script" id=1]
 [ext_resource path="res://addons/project_map/pm_resource.tscn" type="PackedScene" id=2]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 8.0
 content_margin_right = 2.0
 content_margin_top = 4.0
@@ -20,7 +20,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 4
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 8.0
 content_margin_right = 2.0
 content_margin_top = 4.0
@@ -41,8 +41,8 @@ corner_detail = 4
 margin_right = 62.0
 margin_bottom = 26.0
 mouse_filter = 1
-custom_styles/frame = SubResource( 2 )
-custom_styles/selectedframe = SubResource( 3 )
+custom_styles/frame = SubResource( 1 )
+custom_styles/selectedframe = SubResource( 2 )
 custom_constants/port_offset = 0
 slot/0/left_enabled = false
 slot/0/left_type = 0

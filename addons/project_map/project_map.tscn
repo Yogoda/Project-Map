@@ -6,8 +6,8 @@
 bg_color = Color( 0.2, 0.231373, 0.309804, 1 )
 
 [node name="ProjectMap" type="GraphEdit"]
-margin_right = 931.0
-margin_bottom = 548.0
+margin_right = 898.0
+margin_bottom = 685.0
 rect_min_size = Vector2( 500, 500 )
 size_flags_horizontal = 3
 size_flags_vertical = 3

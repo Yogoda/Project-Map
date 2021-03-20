@@ -9,9 +9,40 @@ func _ready():
 	
 	snap_distance = 32
 
+	var interface = get_tree().get_meta("__editor_interface")
+	
+	var file_system_dock = interface.get_file_system_dock()
+	
+	file_system_dock.connect("file_removed", self, "_on_file_removed")
+	file_system_dock.connect("files_moved", self, "_on_file_moved")
+
+
+func _on_file_removed(file_path):
+	
+	for child in get_children():
+		
+		if child is GraphNode and child.get("path") and child.path == file_path:
+			child.queue_free()
+			dirty = true
+
+
+func _on_file_moved(old_file_path, new_file_path):
+	
+	for child in get_children():
+		
+		if child is GraphNode and child.get("path") and child.path == old_file_path:
+
+			child.path = new_file_path
+			child.init(new_file_path)
+			dirty = true
+			
 
 func can_drop_data(position, data):
-	return true
+
+	if data.type == "files":
+		return true
+	else:
+		return false
 
 
 func drop_data(pos, data):
@@ -57,7 +88,7 @@ func save():
 		
 		packed_scene.pack(self)
 
-		ResourceSaver.save("res://addons/project_map/project_map.tscn", packed_scene)
+		ResourceSaver.save("res://addons/project_map/project_map_save.tscn", packed_scene)
 		
 		dirty = false
 

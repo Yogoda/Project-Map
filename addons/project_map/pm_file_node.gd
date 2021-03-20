@@ -12,7 +12,7 @@ func _ready():
 	init(path)
 	
 func init(path):
-	
+
 	var nde_resource = $VB/Resource
 	
 	nde_resource.init(path)
