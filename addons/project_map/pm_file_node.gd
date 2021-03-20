@@ -21,6 +21,13 @@ func init(path):
 		
 		$VB/Script.init(nde_resource.script_path)
 		$VB/Script.show()
+		
+func get_row_count():
+	
+	if $VB/Script.visible:
+		return 2
+	else:
+		return 1
 
 func _on_resource_activated(pm_resource):
 	

@@ -15,23 +15,31 @@ func can_drop_data(position, data):
 
 
 func drop_data(pos, data):
-	
-	var node:GraphNode = graph_node.instance()
+
+	var last_node_row = 0
 	
 	#set exported variables before adding to tree
 	#to be able to save script data
-	var path:String = data.files[0]
-	node.path = path
-	var offset = scroll_offset + pos
-
-	offset = (offset / snap_distance).floor() * snap_distance
+	for file_path in data.files:
 	
-	node.offset = offset
+		var node:GraphNode = graph_node.instance()
 	
-	add_child(node)
-	node.owner = self
+		var path:String = file_path
+		node.path = path
+		var offset = scroll_offset + pos
 
-	node.init(path)
+		offset = (offset / snap_distance).floor() * snap_distance
+		
+		offset.y += last_node_row * snap_distance
+		
+		node.offset = offset
+		
+		add_child(node)
+		node.owner = self
+
+		node.init(path)
+		
+		last_node_row += node.get_row_count()
 	
 	dirty = true
 

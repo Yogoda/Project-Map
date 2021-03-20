@@ -6,7 +6,6 @@
 bg_color = Color( 0.2, 0.231373, 0.309804, 1 )
 
 [node name="ProjectMap" type="GraphEdit"]
-visible = false
 margin_right = 931.0
 margin_bottom = 548.0
 rect_min_size = Vector2( 500, 500 )
