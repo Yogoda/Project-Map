@@ -2,6 +2,7 @@ tool
 extends GraphEdit
 
 var graph_node = load("res://addons/project_map/pm_file_node.tscn")
+var panel_node = load("res://addons/project_map/pm_panel_node.tscn")
 
 var dirty = false
 
@@ -44,6 +45,21 @@ func can_drop_data(position, data):
 	else:
 		return false
 
+#add node to the graph, snap to grid
+func add_node(scn_node, pos):
+	
+	var node:GraphNode = scn_node.instance()
+
+	var offset = scroll_offset + pos
+
+	offset = (offset / snap_distance).floor() * snap_distance
+	
+	node.offset = offset
+	
+	add_child(node)
+	node.owner = self
+	
+	return node
 
 func drop_data(pos, data):
 
@@ -53,24 +69,17 @@ func drop_data(pos, data):
 	#to be able to save script data
 	for file_path in data.files:
 	
-		var node:GraphNode = graph_node.instance()
-	
+		var node:GraphNode = add_node(graph_node, pos)
+		
+		#adjust offset when dropping multiple files
+		node.offset.y += last_node_row * snap_distance
+		last_node_row += node.get_row_count()
+
+		#this sets the script variable for saving, do not remove
 		var path:String = file_path
 		node.path = path
-		var offset = scroll_offset + pos
-
-		offset = (offset / snap_distance).floor() * snap_distance
-		
-		offset.y += last_node_row * snap_distance
-		
-		node.offset = offset
-		
-		add_child(node)
-		node.owner = self
-
 		node.init(path)
-		
-		last_node_row += node.get_row_count()
+
 	
 	dirty = true
 
@@ -105,3 +114,11 @@ func _on_GraphEdit__end_node_move():
 	
 	dirty = true
 
+
+
+func _on_ProjectMap_gui_input(event):
+	
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
+		
+		print("clicky")
+		var node = panel_node.instance()

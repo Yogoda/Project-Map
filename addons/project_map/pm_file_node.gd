@@ -9,7 +9,8 @@ func _ready():
 	$VB/Resource.connect("resource_activated", self, "_on_resource_activated")
 	$VB/Script.connect("resource_activated", self, "_on_resource_activated")
 	
-	init(path)
+	if not path.empty():
+		init(path)
 	
 func init(path):
 

@@ -6,3 +6,8 @@ export.cfg
 # System/tool-specific ignores
 .directory
 *~
+addons/godot-plugin-refresher/plugin.cfg
+addons/godot-plugin-refresher/plugin_refresher.gd
+addons/godot-plugin-refresher/plugin_refresher.tscn
+addons/godot-plugin-refresher/plugin_refresher_plugin.gd
+addons/project_map/project_map_save.tscn
