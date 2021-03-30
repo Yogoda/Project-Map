@@ -132,12 +132,27 @@ func _on_GraphEdit__end_node_move():
 
 func _on_ProjectMap_gui_input(event):
 	
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
+	var zoom_speed = 0.05
+	
+	if event is InputEventMouseButton:
+	
+		if event.button_index == BUTTON_LEFT and event.pressed:
 		
-		if add_panel:
-			add_panel = false
-		
-			var node = add_node(panel_node, event.position)
+			if add_panel:
+				add_panel = false
+			
+				var node = add_node(panel_node, event.position)
+				accept_event()
+				
+		elif event.button_index == BUTTON_WHEEL_UP:
+			
+			zoom += zoom_speed
+			accept_event()
+			
+		elif event.button_index == BUTTON_WHEEL_DOWN:
+			
+			zoom -= zoom_speed
+			accept_event()
 
 
 #func _on_ProjectMap_node_selected(node):

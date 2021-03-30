@@ -11,3 +11,10 @@ addons/godot-plugin-refresher/plugin_refresher.gd
 addons/godot-plugin-refresher/plugin_refresher.tscn
 addons/godot-plugin-refresher/plugin_refresher_plugin.gd
 addons/project_map/project_map_save.tscn
+addons/editor_icon_previewer/editor_icon_previewer.gd
+addons/editor_icon_previewer/editor_icon_window.gd
+addons/editor_icon_previewer/editor_icon_window.tscn
+addons/editor_icon_previewer/icon.png
+addons/editor_icon_previewer/icon.png.import
+addons/editor_icon_previewer/LICENSE.md
+addons/editor_icon_previewer/plugin.cfg

@@ -21,7 +21,7 @@ size = Vector2( 16, 16 )
 [sub_resource type="StyleBoxEmpty" id=3]
 
 [node name="GraphNode" type="GraphNode"]
-margin_right = 224.0
+margin_right = 256.0
 margin_bottom = 288.0
 custom_styles/commentfocus = ExtResource( 2 )
 custom_styles/comment = ExtResource( 2 )
@@ -42,29 +42,30 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_left = 16.0
 margin_top = 24.0
-margin_right = 208.0
+margin_right = 240.0
 margin_bottom = 24.0
-custom_constants/margin_top = -18
-custom_constants/margin_left = -18
+custom_constants/margin_top = -20
+custom_constants/margin_left = -28
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-margin_left = -18.0
-margin_top = -18.0
-margin_right = 192.0
+margin_left = -28.0
+margin_top = -20.0
+margin_right = 224.0
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
-margin_right = 25.0
-margin_bottom = 18.0
-rect_min_size = Vector2( 25, 0 )
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+margin_right = 20.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 20, 0 )
 texture = SubResource( 2 )
 
 [node name="Title" type="LineEdit" parent="MarginContainer/HBoxContainer"]
-margin_left = 29.0
-margin_right = 159.0
-margin_bottom = 18.0
+margin_left = 24.0
+margin_right = 154.0
+margin_bottom = 20.0
 custom_styles/normal = SubResource( 3 )
 text = "Group (click to edit)"
 expand_to_text_length = true
+[connection signal="gui_input" from="MarginContainer/HBoxContainer/Icon" to="." method="_on_Icon_gui_input"]
 [connection signal="focus_entered" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_focus_entered"]
 [connection signal="focus_exited" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_focus_exited"]
 [connection signal="gui_input" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_gui_input"]
