@@ -1,3 +1,0 @@
-tool
-extends GraphNode
-

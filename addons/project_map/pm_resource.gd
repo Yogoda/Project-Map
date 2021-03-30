@@ -22,8 +22,7 @@ func init(resource_path):
 		$Button.text = "built-in script"
 	else:
 		$Button.text = resource_name
-	
-	print("init with path ", resource_path)
+
 	get_resource_info(resource_path)
 	
 	$Icon.texture = icon

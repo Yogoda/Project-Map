@@ -52,3 +52,4 @@ func _on_resource_activated(pm_resource):
 		if resource is Script:
 					
 			interface.set_main_screen_editor("Script")
+

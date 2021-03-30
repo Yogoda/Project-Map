@@ -2,21 +2,36 @@ tool
 extends GraphEdit
 
 var graph_node = load("res://addons/project_map/pm_file_node.tscn")
-var panel_node = load("res://addons/project_map/pm_panel_node.tscn")
+var panel_node = load("res://addons/project_map/pm_group_node.tscn")
 
 var dirty = false
 
-func _ready():
-	
-	snap_distance = 32
+var add_panel: = false
 
+func _enter_tree():
+	
+	var hbox = get_zoom_hbox()
+	
+	var button = Button.new()
+	button.text = "Add Group"
+	hbox.add_child(button)
+	button.connect("pressed", self, "_on_add_panel")
+	
 	var interface = get_tree().get_meta("__editor_interface")
 	
 	var file_system_dock = interface.get_file_system_dock()
 	
 	file_system_dock.connect("file_removed", self, "_on_file_removed")
 	file_system_dock.connect("files_moved", self, "_on_file_moved")
+	
+	
+func _on_add_panel():
+	
+	add_panel = true
 
+func _ready():
+	
+	snap_distance = 32
 
 func _on_file_removed(file_path):
 	
@@ -52,12 +67,15 @@ func add_node(scn_node, pos):
 
 	var offset = scroll_offset + pos
 
-	offset = (offset / snap_distance).floor() * snap_distance
+	if use_snap:
+		offset = (offset / snap_distance).floor() * snap_distance
 	
 	node.offset = offset
 	
 	add_child(node)
 	node.owner = self
+	
+	dirty = true
 	
 	return node
 
@@ -70,18 +88,15 @@ func drop_data(pos, data):
 	for file_path in data.files:
 	
 		var node:GraphNode = add_node(graph_node, pos)
-		
-		#adjust offset when dropping multiple files
-		node.offset.y += last_node_row * snap_distance
-		last_node_row += node.get_row_count()
 
 		#this sets the script variable for saving, do not remove
 		var path:String = file_path
 		node.path = path
 		node.init(path)
 
-	
-	dirty = true
+		#adjust offset when dropping multiple files
+		node.offset.y += last_node_row * snap_distance
+		last_node_row += node.get_row_count()
 
 
 func _on_BtnSave_pressed():
@@ -115,10 +130,18 @@ func _on_GraphEdit__end_node_move():
 	dirty = true
 
 
-
 func _on_ProjectMap_gui_input(event):
 	
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
 		
-		print("clicky")
-		var node = panel_node.instance()
+		if add_panel:
+			add_panel = false
+		
+			var node = add_node(panel_node, event.position)
+
+
+#func _on_ProjectMap_node_selected(node):
+#	var interface = get_tree().get_meta("__editor_interface")
+#
+#	print("inspect object ", node)
+##	interface.inspect_object(node)
