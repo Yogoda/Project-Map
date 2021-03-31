@@ -23,15 +23,26 @@ func _enter_tree():
 	
 	file_system_dock.connect("file_removed", self, "_on_file_removed")
 	file_system_dock.connect("files_moved", self, "_on_file_moved")
-	
-	
+
+#snap vector to grid
+func snap(pos:Vector2):
+
+	if use_snap:
+
+		pos = pos / snap_distance
+		pos = pos.floor() * snap_distance
+		
+	return pos
+
 func _on_add_panel():
 	
 	add_panel = true
 
+
 func _ready():
 	
 	snap_distance = 32
+
 
 func _on_file_removed(file_path):
 	
@@ -51,7 +62,7 @@ func _on_file_moved(old_file_path, new_file_path):
 			child.path = new_file_path
 			child.init(new_file_path)
 			dirty = true
-			
+
 
 func can_drop_data(position, data):
 
@@ -60,6 +71,7 @@ func can_drop_data(position, data):
 	else:
 		return false
 
+
 #add node to the graph, snap to grid
 func add_node(scn_node, pos):
 	
@@ -67,10 +79,7 @@ func add_node(scn_node, pos):
 
 	var offset = scroll_offset + pos
 
-	if use_snap:
-		offset = (offset / snap_distance).floor() * snap_distance
-	
-	node.offset = offset
+	node.offset = snap(offset)
 	
 	add_child(node)
 	node.owner = self
@@ -78,6 +87,7 @@ func add_node(scn_node, pos):
 	dirty = true
 	
 	return node
+
 
 func drop_data(pos, data):
 
@@ -147,6 +157,7 @@ func _on_ProjectMap_gui_input(event):
 		elif event.button_index == BUTTON_WHEEL_UP:
 			
 			zoom += zoom_speed
+			zoom = min(zoom, 1)
 			accept_event()
 			
 		elif event.button_index == BUTTON_WHEEL_DOWN:

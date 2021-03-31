@@ -66,7 +66,6 @@ custom_styles/normal = SubResource( 3 )
 text = "Group (click to edit)"
 expand_to_text_length = true
 [connection signal="gui_input" from="MarginContainer/HBoxContainer/Icon" to="." method="_on_Icon_gui_input"]
-[connection signal="focus_entered" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_focus_entered"]
 [connection signal="focus_exited" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_focus_exited"]
 [connection signal="gui_input" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_gui_input"]
 [connection signal="text_entered" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_text_entered"]
