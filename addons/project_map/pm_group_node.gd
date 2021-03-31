@@ -3,6 +3,8 @@ extends GraphNode
 
 const file_node_script = preload("res://addons/project_map/pm_file_node.gd")
 
+export(String) var group_name = "Group (click to edit)"
+
 var icon = NodePath("MarginContainer/HBoxContainer/Icon")
 var header = NodePath("MarginContainer/HBoxContainer/Title")
 
@@ -14,7 +16,11 @@ func _enter_tree():
 	connect("resize_request", self, "_on_GraphNode_resize_request")
 	get_node(icon).texture = get_icon("WindowDialog", "EditorIcons")
 	
-	get_node(header).text = name
+	get_node(header).text = group_name
+
+func init():
+	pass
+#	get_node(header).text = "Group (click to edit)"
 
 func _on_GraphNode_resize_request(new_minsize:Vector2):
 
@@ -28,20 +34,18 @@ func _on_GraphNode_resize_request(new_minsize:Vector2):
 
 func _on_Title_text_entered(new_text):
 	
-	#lose focus
+	#lose focus, will call focus_exited
 	hide()
 	show()
-	name = new_text
-	get_parent().dirty = true
 
 
 #deselect when validating title
 func _on_Title_focus_exited():
 	
-	name = get_node(header).text
+	group_name = get_node(header).text
 	get_node(header).deselect()
 	get_parent().dirty = true
-	
+
 
 #select text when clicking on title
 func _on_Title_gui_input(event):
@@ -90,8 +94,20 @@ func _on_Icon_gui_input(event):
 		offset += get_local_mouse_position() - drag_offset
 		offset = get_parent().snap(offset)
 		
-		for node in drag_nodes:
-			node.offset += offset - offset_ori
+		#move group nodes only if alt is pressed
+		if Input.is_key_pressed(KEY_ALT):
+		
+			for node in drag_nodes:
+				node.offset += offset - offset_ori
+				
+		#move selected nodes
+		for node in get_parent().get_children():
+			if node is file_node_script and node.selected:
+				
+				if Input.is_key_pressed(KEY_ALT) and node in drag_nodes:
+					continue
+					
+				node.offset += offset - offset_ori
 
 		get_parent().dirty = true
 		accept_event()

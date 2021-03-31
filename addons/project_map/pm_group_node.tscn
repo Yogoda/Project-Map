@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/project_map/pm_group_node.gd" type="Script" id=1]
 [ext_resource path="res://addons/project_map/group.stylebox" type="StyleBox" id=2]
+[ext_resource path="res://addons/project_map/group_selected.stylebox" type="StyleBox" id=3]
 
 [sub_resource type="Image" id=4]
 data = {
@@ -23,7 +24,7 @@ size = Vector2( 16, 16 )
 [node name="GraphNode" type="GraphNode"]
 margin_right = 256.0
 margin_bottom = 288.0
-custom_styles/commentfocus = ExtResource( 2 )
+custom_styles/commentfocus = ExtResource( 3 )
 custom_styles/comment = ExtResource( 2 )
 custom_constants/separation = 0
 resizable = true
@@ -56,6 +57,7 @@ margin_right = 224.0
 margin_right = 20.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 20, 0 )
+hint_tooltip = "Press ALT while dragging to drag content"
 texture = SubResource( 2 )
 
 [node name="Title" type="LineEdit" parent="MarginContainer/HBoxContainer"]

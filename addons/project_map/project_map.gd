@@ -1,8 +1,9 @@
 tool
 extends GraphEdit
 
-var graph_node = load("res://addons/project_map/pm_file_node.tscn")
-var panel_node = load("res://addons/project_map/pm_group_node.tscn")
+var graph_node = preload("res://addons/project_map/pm_file_node.tscn")
+var panel_node = preload("res://addons/project_map/pm_group_node.tscn")
+var panel_node_script = preload("res://addons/project_map/pm_group_node.gd")
 
 var dirty = false
 
@@ -10,6 +11,8 @@ var add_panel: = false
 
 func _enter_tree():
 	
+	connect("gui_input", self, "_on_ProjectMap_gui_input")
+		
 	var hbox = get_zoom_hbox()
 	
 	var button = Button.new()
@@ -23,6 +26,7 @@ func _enter_tree():
 	
 	file_system_dock.connect("file_removed", self, "_on_file_removed")
 	file_system_dock.connect("files_moved", self, "_on_file_moved")
+
 
 #snap vector to grid
 func snap(pos:Vector2):
@@ -82,6 +86,10 @@ func add_node(scn_node, pos):
 	node.offset = snap(offset)
 	
 	add_child(node)
+	
+	if node is panel_node_script:
+		move_child(node, 0)
+	
 	node.owner = self
 	
 	dirty = true
@@ -152,6 +160,7 @@ func _on_ProjectMap_gui_input(event):
 				add_panel = false
 			
 				var node = add_node(panel_node, event.position)
+				node.init()
 				accept_event()
 				
 		elif event.button_index == BUTTON_WHEEL_UP:
@@ -165,9 +174,3 @@ func _on_ProjectMap_gui_input(event):
 			zoom -= zoom_speed
 			accept_event()
 
-
-#func _on_ProjectMap_node_selected(node):
-#	var interface = get_tree().get_meta("__editor_interface")
-#
-#	print("inspect object ", node)
-##	interface.inspect_object(node)
