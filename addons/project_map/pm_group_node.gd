@@ -18,9 +18,14 @@ func _enter_tree():
 	
 	get_node(header).text = group_name
 
+func set_selected(value):
+	
+	print("set selected")
+	pass
+
 func init():
 	pass
-#	get_node(header).text = "Group (click to edit)"
+
 
 func _on_GraphNode_resize_request(new_minsize:Vector2):
 
@@ -80,7 +85,7 @@ func _on_Icon_gui_input(event):
 		#drag start
 		if event.pressed:
 			drag_offset = get_local_mouse_position() #event.position
-			selected = true
+#			selected = true
 			drag_nodes = get_group_nodes()
 		else:
 			drag_offset = null

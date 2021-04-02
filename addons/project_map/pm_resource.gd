@@ -5,27 +5,47 @@ signal resource_activated(pm_resource)
 
 enum {TYPE_2D, TYPE_3D, TYPE_SCRIPT, TYPE_OTHER}
 
-var resource_type
-
 var resource_path
+var resource_type
+var resource_name
 
-var icon:Texture
+var icon_class:String
 var script_path:String
+
+func _ready():
+	
+	pass
+
+
+func set_icon(icon_class):
+	
+	$Icon.texture = get_icon(icon_class, "EditorIcons")
+
+func set_name(resource_path):
+	
+	if not resource_name:
+		
+		resource_name = get_resource_name(resource_path)
+		
+		if resource_name.find("::") >= 0:
+			resource_name = "built-in script"
+			
+	$Button.text = resource_name
+
 
 func init(resource_path):
 	
 	self.resource_path = resource_path
 
-	var resource_name = get_resource_name(resource_path)
-	
-	if resource_name.find("::") >= 0:
-		$Button.text = "built-in script"
-	else:
-		$Button.text = resource_name
+	set_name(resource_path)
 
-	get_resource_info(resource_path)
+	if icon_class.empty():
+		get_resource_info(resource_path)
+		
+	set_icon(icon_class)
 	
-	$Icon.texture = icon
+	if not script_path.empty():
+		pass
 
 
 func get_resource_info(resource_path):
@@ -41,7 +61,7 @@ func get_resource_info(resource_path):
 		else:
 			resource_type = TYPE_2D
 		
-		icon = get_icon(instance.get_class(), "EditorIcons")
+		icon_class = instance.get_class()
 		
 		var scn_script = instance.get_script()
 		
@@ -53,11 +73,11 @@ func get_resource_info(resource_path):
 		if resource is Script:
 			
 			resource_type = TYPE_SCRIPT
-			icon = get_icon("Script", "EditorIcons")
+			icon_class = "Script"
 		else:
 
 			resource_type = TYPE_OTHER
-			icon = get_icon(resource.get_class(), "EditorIcons")
+			icon_class = resource.get_class()
 
 
 func get_resource_name(resource_path):

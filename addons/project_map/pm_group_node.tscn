@@ -21,12 +21,11 @@ size = Vector2( 16, 16 )
 
 [sub_resource type="StyleBoxEmpty" id=3]
 
-[node name="GraphNode" type="GraphNode"]
+[node name="GroupNode" type="GraphNode"]
 margin_right = 256.0
 margin_bottom = 288.0
 custom_styles/commentfocus = ExtResource( 3 )
 custom_styles/comment = ExtResource( 2 )
-custom_constants/separation = 0
 resizable = true
 comment = true
 slot/0/left_enabled = false
@@ -67,6 +66,7 @@ margin_bottom = 20.0
 custom_styles/normal = SubResource( 3 )
 text = "Group (click to edit)"
 expand_to_text_length = true
+caret_blink = true
 [connection signal="gui_input" from="MarginContainer/HBoxContainer/Icon" to="." method="_on_Icon_gui_input"]
 [connection signal="focus_exited" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_focus_exited"]
 [connection signal="gui_input" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_gui_input"]
