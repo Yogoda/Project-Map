@@ -10,9 +10,11 @@ Click on the nodes to access the scenes/scripts.
 
 Provides a visual grouping, no functionality.
 Click on "Add Group" button, then click on graph to create a group node.
-Drag the icon to move the node
-Press ALT while dragging to move the children at the same time
-You can resize it with the lower right handle
+
+Drag the icon to move the node.
+Press ALT while dragging to move the children at the same time.
+
+You can resize it with the lower right handle.
 Selected it by dragging a rect and press delete to delete it
 
 # Changelog
