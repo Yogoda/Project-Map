@@ -6,6 +6,8 @@ Simply drag and drop files you need to access often into the graph.
 
 Click on the nodes to access the scenes/scripts.
 
+![Screenshot](screenshots/project_view.png)
+
 ### Group nodes
 
 Provides a visual grouping, no functionality.
@@ -16,6 +18,8 @@ Press ALT while dragging to move the children at the same time.
 
 You can resize it with the lower right handle.
 Selected it by dragging a rect and press delete to delete it
+
+![Screenshot](screenshots/group_nodes.png)
 
 # Changelog
 
