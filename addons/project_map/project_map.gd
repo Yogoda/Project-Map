@@ -184,4 +184,3 @@ func _on_ProjectMap_gui_input(event):
 			
 			zoom -= zoom_speed
 			accept_event()
-

@@ -106,7 +106,15 @@ func _on_Icon_gui_input(event):
 	
 		#drag start
 		if event.pressed:
+			
 			drag_offset = get_local_mouse_position() #event.position
+			
+		#reorder nodes so selected group is on top of other groups
+			raise()
+			
+			for node in get_parent().get_children():
+				if node is file_node_script:
+					node.raise()
 
 		else:
 			drag_offset = null
