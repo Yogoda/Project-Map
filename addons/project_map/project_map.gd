@@ -1,13 +1,16 @@
 tool
 extends GraphEdit
 
-var graph_node = preload("res://addons/project_map/pm_file_node.tscn")
-var panel_node = preload("res://addons/project_map/pm_group_node.tscn")
-var panel_node_script = preload("res://addons/project_map/pm_group_node.gd")
+var file_node = preload("res://addons/project_map/pm_file_node.tscn")
+var file_node_script = preload("res://addons/project_map/pm_file_node.gd")
+var group_node = preload("res://addons/project_map/pm_group_node.tscn")
+var group_node_script = preload("res://addons/project_map/pm_group_node.gd")
 
 var dirty = false
 
 var add_panel: = false
+
+var undo_redo
 
 func _enter_tree():
 	
@@ -21,6 +24,7 @@ func _enter_tree():
 	button.connect("pressed", self, "_on_add_panel")
 	
 	var interface = get_tree().get_meta("__editor_interface")
+	undo_redo = get_tree().get_meta("__undo_redo")
 	
 	var file_system_dock = interface.get_file_system_dock()
 	
@@ -87,7 +91,7 @@ func add_node(scn_node, pos):
 	
 	add_child(node)
 	
-	if node is panel_node_script:
+	if node is group_node_script:
 		move_child(node, 0)
 	
 	node.owner = self
@@ -105,7 +109,7 @@ func drop_data(pos, data):
 	#to be able to save script data
 	for file_path in data.files:
 	
-		var node:GraphNode = add_node(graph_node, pos)
+		var node:GraphNode = add_node(file_node, pos)
 
 		#this sets the script variable for saving, do not remove
 		var path:String = file_path
@@ -146,7 +150,14 @@ func _on_GraphEdit_delete_nodes_request():
 func _on_GraphEdit__end_node_move():
 	
 	dirty = true
-
+	
+	#nodify groups of node moving
+	for child in get_children():
+		if child is group_node_script:
+			
+			for selected_node in get_children():
+				if selected_node is file_node_script and selected_node.selected:
+					child.on_file_node_moved(selected_node)
 
 func _on_ProjectMap_gui_input(event):
 	
@@ -159,7 +170,7 @@ func _on_ProjectMap_gui_input(event):
 			if add_panel:
 				add_panel = false
 			
-				var node = add_node(panel_node, event.position)
+				var node = add_node(group_node, event.position)
 				node.init()
 				accept_event()
 				

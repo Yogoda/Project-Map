@@ -8,6 +8,7 @@ var project_map_save_path = "res://addons/project_map/project_map_save.tscn"
 func _enter_tree():
 	
 	get_tree().set_meta("__editor_interface", get_editor_interface())
+	get_tree().set_meta("__undo_redo", get_undo_redo())
 	
 	var file_save = File.new()
 	if file_save.file_exists(project_map_save_path):

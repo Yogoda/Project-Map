@@ -19,7 +19,7 @@ config/name="Project Map"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "editor_icon_previewer", "godot-plugin-refresher", "project_map" )
+enabled=PoolStringArray( "project_map" )
 
 [rendering]
 

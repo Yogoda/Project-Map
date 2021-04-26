@@ -9,7 +9,9 @@ var icon = NodePath("MarginContainer/HBoxContainer/Icon")
 var header = NodePath("MarginContainer/HBoxContainer/Title")
 
 var drag_offset = null
-var drag_nodes = []
+
+#nodes inside the group
+var children = []
 
 func _enter_tree():
 	
@@ -18,10 +20,12 @@ func _enter_tree():
 	
 	get_node(header).text = group_name
 
-func set_selected(value):
-	
-	print("set selected")
-	pass
+func _ready():
+
+	#need to wait for group position to be set
+	yield(get_tree(), "idle_frame")
+	children = get_group_nodes()
+
 
 func init():
 	pass
@@ -72,46 +76,64 @@ func get_group_nodes():
 		
 		if child is file_node_script:
 			
-			if get_global_rect().has_point(child.get_global_rect().position):
+			if is_node_child(child):
 				nodes.append(child)
+
 				
 	return nodes
+	
+func is_node_child(node):
+	
+	return get_global_rect().has_point(node.get_global_rect().position)
+
+
+#file node moved
+func on_file_node_moved(node):
+	
+	if is_node_child(node):
+		if not children.has(node):
+			children.append(node)
+	else:
+		if children.has(node):
+			children.erase(node)
+
 
 #drag the group node using the icon
 func _on_Icon_gui_input(event):
 	
+	#click node
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 	
 		#drag start
 		if event.pressed:
 			drag_offset = get_local_mouse_position() #event.position
-#			selected = true
-			drag_nodes = get_group_nodes()
+
 		else:
 			drag_offset = null
 			
 		accept_event()
 	
-	#dragging node
+	#drag selected node
 	elif drag_offset and event is InputEventMouseMotion:
 		
 		var offset_ori = offset
 		offset += get_local_mouse_position() - drag_offset
 		offset = get_parent().snap(offset)
-		
-		#move group nodes only if alt is pressed
-		if Input.is_key_pressed(KEY_ALT):
-		
-			for node in drag_nodes:
-				node.offset += offset - offset_ori
-				
+
 		#move selected nodes
-		for node in get_parent().get_children():
-			if node is file_node_script and node.selected:
-				
-				if Input.is_key_pressed(KEY_ALT) and node in drag_nodes:
-					continue
-					
+#		for node in get_parent().get_children():
+#
+#			if node is GraphNode and node.selected:
+#
+#				if node == self:
+#					continue
+#
+#				node.offset += offset - offset_ori
+
+		#move group nodes, don't if shift or alt is pressed
+		if not (Input.is_key_pressed(KEY_ALT) or Input.is_key_pressed(KEY_SHIFT)):
+
+			for node in children:
 				node.offset += offset - offset_ori
 
 		get_parent().dirty = true

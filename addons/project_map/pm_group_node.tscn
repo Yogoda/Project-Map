@@ -56,7 +56,7 @@ margin_right = 224.0
 margin_right = 20.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 20, 0 )
-hint_tooltip = "Press ALT while dragging to drag content"
+hint_tooltip = "Press SHIFT  while dragging to not drag content"
 texture = SubResource( 2 )
 
 [node name="Title" type="LineEdit" parent="MarginContainer/HBoxContainer"]
@@ -67,6 +67,7 @@ custom_styles/normal = SubResource( 3 )
 text = "Group (click to edit)"
 expand_to_text_length = true
 caret_blink = true
+
 [connection signal="gui_input" from="MarginContainer/HBoxContainer/Icon" to="." method="_on_Icon_gui_input"]
 [connection signal="focus_exited" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_focus_exited"]
 [connection signal="gui_input" from="MarginContainer/HBoxContainer/Title" to="." method="_on_Title_gui_input"]

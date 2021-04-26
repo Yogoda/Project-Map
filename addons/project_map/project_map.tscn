@@ -19,5 +19,6 @@ __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
+
 [connection signal="_end_node_move" from="." to="." method="_on_GraphEdit__end_node_move"]
 [connection signal="delete_nodes_request" from="." to="." method="_on_GraphEdit_delete_nodes_request"]
