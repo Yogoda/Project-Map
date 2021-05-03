@@ -80,6 +80,12 @@ func _on_resource_activated(pm_resource):
 			
 		interface.open_scene_from_path(pm_resource.resource_path)
 	
+	elif pm_resource.resource_type == pm_resource.TYPE_DIR:
+		
+		var file_dock = interface.get_file_system_dock()
+		
+		file_dock.navigate_to_path(pm_resource.resource_path)
+		
 	else:
 		
 		var resource = ResourceLoader.load(pm_resource.resource_path)

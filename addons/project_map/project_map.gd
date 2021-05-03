@@ -74,7 +74,7 @@ func _on_file_moved(old_file_path, new_file_path):
 
 func can_drop_data(position, data):
 
-	if data.type == "files":
+	if data.type == "files" or data.type == "files_and_dirs":
 		return true
 	else:
 		return false
@@ -103,6 +103,15 @@ func add_node(scn_node, pos):
 
 func drop_data(pos, data):
 
+#	match(data.type):
+#
+#		"files":
+#
+#		"files_and_dirs":
+#
+#			print("dropped directory: ", data.files)
+
+	
 	var last_node_row = 0
 	
 	#set exported variables before adding to tree
