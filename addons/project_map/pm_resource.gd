@@ -94,7 +94,6 @@ func get_resource_info(resource_path):
 
 func get_resource_name(resource_path):
 	
-	print(resource_path)
 	var split:Array = resource_path.split("/")
 
 	var name = split.pop_back()

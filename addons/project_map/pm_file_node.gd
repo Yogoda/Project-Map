@@ -32,8 +32,9 @@ func _ready():
 	
 func set_selected(value):
 	
-	print("set selected")
-	
+	pass
+
+
 func init(path):
 
 	var nde_resource = main_resource
@@ -67,6 +68,22 @@ func get_row_count():
 		return 1
 
 
+func expand_selected(node, depth = 1):
+	
+	for child in node.get_children():
+		
+		if child is Tree:
+			
+			var item:TreeItem = child.get_selected()
+			
+			if item:
+				
+				if item.get_text(0) == main_resource.resource_name:
+					item.collapsed = false
+			
+		expand_selected(child, depth + 1)
+
+
 func _on_resource_activated(pm_resource):
 	
 	var interface = get_tree().get_meta("__editor_interface")
@@ -82,9 +99,11 @@ func _on_resource_activated(pm_resource):
 	
 	elif pm_resource.resource_type == pm_resource.TYPE_DIR:
 		
-		var file_dock = interface.get_file_system_dock()
+		var file_dock:FileSystemDock = interface.get_file_system_dock()
 		
 		file_dock.navigate_to_path(pm_resource.resource_path)
+		
+		expand_selected(file_dock)
 		
 	else:
 		
