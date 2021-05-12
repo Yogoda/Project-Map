@@ -12,6 +12,8 @@ export(String) var script_name
 onready var main_resource = $VB/Resource
 onready var script_resource = $VB/Script
 
+var last_offset #used for undo move
+
 func _ready():
 	
 	main_resource.connect("resource_activated", self, "_on_resource_activated")
@@ -67,6 +69,18 @@ func get_row_count():
 	else:
 		return 1
 
+func collapse_selected(node, depth = 1):
+	
+	for child in node.get_children():
+		
+		if child is Tree:
+			
+			var item:TreeItem = child.get_selected()
+			
+			if item:
+				item.collapsed = true
+			
+		collapse_selected(child, depth + 1)
 
 func expand_selected(node, depth = 1):
 	
@@ -101,8 +115,8 @@ func _on_resource_activated(pm_resource):
 		
 		var file_dock:FileSystemDock = interface.get_file_system_dock()
 		
+		collapse_selected(file_dock)
 		file_dock.navigate_to_path(pm_resource.resource_path)
-		
 		expand_selected(file_dock)
 		
 	else:

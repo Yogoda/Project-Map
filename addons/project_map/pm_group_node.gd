@@ -10,6 +10,8 @@ var header = NodePath("MarginContainer/HBoxContainer/Title")
 
 var drag_offset = null
 
+var last_offset #used for undo move
+
 #nodes inside the group
 var children = []
 
@@ -107,6 +109,7 @@ func _on_Icon_gui_input(event):
 		#drag start
 		if event.pressed:
 			
+			selected = true
 			drag_offset = get_local_mouse_position() #event.position
 			
 		#reorder nodes so selected group is on top of other groups

@@ -6,22 +6,35 @@ var file_node_script = preload("res://addons/project_map/pm_file_node.gd")
 var group_node = preload("res://addons/project_map/pm_group_node.tscn")
 var group_node_script = preload("res://addons/project_map/pm_group_node.gd")
 
+var comment_node = preload("res://addons/project_map/pm_comment_node.tscn")
+var comment_node_script = preload("res://addons/project_map/pm_comment_node.gd")
+
 var dirty = false
 
 var add_panel: = false
+var add_comment: = false
 
-var undo_redo
+var undo_redo:UndoRedo
 
 func _enter_tree():
 	
 	connect("gui_input", self, "_on_ProjectMap_gui_input")
-		
+	connect("_begin_node_move", self, "_on_begin_node_move")
+	connect("_end_node_move", self, "_on_end_node_move")
+	
 	var hbox = get_zoom_hbox()
 	
+	#add group button
 	var button = Button.new()
 	button.text = "Add Group"
 	hbox.add_child(button)
 	button.connect("pressed", self, "_on_add_panel")
+	
+	#add comment button
+	button = Button.new()
+	button.text = "Add Comment"
+	hbox.add_child(button)
+	button.connect("pressed", self, "_on_add_comment")
 	
 	var interface = get_tree().get_meta("__editor_interface")
 	undo_redo = get_tree().get_meta("__undo_redo")
@@ -46,6 +59,9 @@ func _on_add_panel():
 	
 	add_panel = true
 
+func _on_add_comment():
+	
+	add_comment = true
 
 func _ready():
 	
@@ -103,15 +119,6 @@ func add_node(scn_node, pos):
 
 func drop_data(pos, data):
 
-#	match(data.type):
-#
-#		"files":
-#
-#		"files_and_dirs":
-#
-#			print("dropped directory: ", data.files)
-
-	
 	var last_node_row = 0
 	
 	#set exported variables before adding to tree
@@ -154,19 +161,57 @@ func _on_GraphEdit_delete_nodes_request():
 		if child is GraphNode:
 			if child.selected:
 				child.queue_free()
-
-
-func _on_GraphEdit__end_node_move():
-	
+				
 	dirty = true
+
+func _notify_group_move():
 	
-	#nodify groups of node moving
-	for child in get_children():
-		if child is group_node_script:
+	#notify all groups of node moving
+	for group in get_children():
+		if group is group_node_script:
 			
 			for selected_node in get_children():
 				if selected_node is file_node_script and selected_node.selected:
-					child.on_file_node_moved(selected_node)
+					print("notify node moved")
+					group.on_file_node_moved(selected_node)
+
+func _undo_move(node, offset):
+	
+	node.offset = offset
+	node.selected = true
+	
+	_notify_group_move()
+	
+func _do_move(node, offset):
+
+	node.offset = offset
+
+	_notify_group_move()
+
+
+func _on_begin_node_move():
+	
+	for child in get_children():
+		
+		if child is GraphNode and child.selected:
+			child.last_offset = child.offset
+
+
+func _on_end_node_move():
+	
+	dirty = true
+	
+	undo_redo.create_action("Move node")
+	
+	for child in get_children():
+		
+		if child is GraphNode and child.selected:
+	
+			undo_redo.add_do_method(self, "_do_move", child, child.offset)
+			undo_redo.add_undo_method(self, "_undo_move", child, child.last_offset)
+
+	undo_redo.commit_action()
+
 
 func _on_ProjectMap_gui_input(event):
 	
@@ -180,6 +225,13 @@ func _on_ProjectMap_gui_input(event):
 				add_panel = false
 			
 				var node = add_node(group_node, event.position)
+				node.init()
+				accept_event()
+				
+			elif add_comment:
+				add_comment = false
+				
+				var node = add_node(comment_node, event.position)
 				node.init()
 				accept_event()
 				
