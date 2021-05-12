@@ -10,7 +10,6 @@ config_version=4
 
 _global_script_classes=[  ]
 _global_script_class_icons={
-
 }
 
 [application]
@@ -19,7 +18,7 @@ config/name="Project Map"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "project_map" )
+enabled=PoolStringArray( "res://addons/editor_icon_previewer/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/project_map/plugin.cfg" )
 
 [rendering]
 

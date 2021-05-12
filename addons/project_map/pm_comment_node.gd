@@ -9,35 +9,40 @@ var drag_offset = null
 
 var last_offset #used for undo move
 
-#onready var text_edit = get_node("TextEdit")
+export(String) var comment_text = "Comment \n\n Use the handle to resize"
+export(Vector2) var comment_rect = Vector2(400, 200)
 
 func _enter_tree():
 	
 	connect("resize_request", self, "_on_GraphNode_resize_request")
 	get_node(icon).texture = get_icon("MultiLine", "EditorIcons")
+	
+	connect("mouse_entered", self, "_on_CommentNode_mouse_entered")
+	connect("mouse_exited", self, "_on_CommentNode_mouse_exited")
+	
 
 func _ready():
 
-	_set_text_height()
+	get_node("MarginContainer/HBox/TextBox").text = comment_text
+	resize(comment_rect)
 	pass
 
 func init():
 
 	pass
 
+func resize(size):
+	
+	rect_min_size = size
+	rect_size = size
+
+	$MarginContainer.rect_min_size = Vector2(size.x - 60, size.y - 40)
 
 func _on_GraphNode_resize_request(new_minsize:Vector2):
 
-#	new_minsize = get_parent().snap(new_minsize)
-	
-	rect_min_size = new_minsize
-	rect_size = new_minsize
-#
-	$MarginContainer.rect_min_size = Vector2(new_minsize.x - 60, new_minsize.y - 40)
-#	$Panel.rect_min_size = new_minsize
-#	$Panel.rect_size = new_minsize
+	resize(new_minsize)
 
-
+	comment_rect = new_minsize
 	get_parent().dirty = true
 
 #drag the group node using the icon
@@ -74,17 +79,6 @@ func _on_Icon_gui_input(event):
 		get_parent().dirty = true
 		accept_event()
 
-func _set_text_height():
-	
-#	var line_count = text_edit.text.count('\n') + 1
-	
-#	text_edit.rect_min_size.y = line_count * 30 - (line_count-1) * 8
-
-	pass
-
-func _on_TextEdit_text_changed():
-	_set_text_height()
-
 
 func _on_CommentNode_mouse_entered():
 	
@@ -102,3 +96,9 @@ func _on_TextBox_mouse_entered():
 
 func _on_TextBox_mouse_exited():
 	_on_CommentNode_mouse_exited()
+
+
+func _on_TextBox_text_changed():
+	
+	comment_text = get_node("MarginContainer/HBox/TextBox").text
+	get_parent().dirty = true
