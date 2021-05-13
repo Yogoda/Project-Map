@@ -1,7 +1,5 @@
 tool
-extends GraphNode
-
-const file_node_script = preload("res://addons/project_map/pm_file_node.gd")
+extends CommonNode
 
 export(String) var group_name = "Group (click to edit)"
 
@@ -21,6 +19,7 @@ func _enter_tree():
 	get_node(icon).texture = get_icon("WindowDialog", "EditorIcons")
 	
 	get_node(header).text = group_name
+	
 
 func _ready():
 
@@ -100,52 +99,52 @@ func on_file_node_moved(node):
 			children.erase(node)
 
 
-#drag the group node using the icon
-func _on_Icon_gui_input(event):
-	
-	#click node
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-	
-		#drag start
-		if event.pressed:
-			
-			selected = true
-			drag_offset = get_local_mouse_position() #event.position
-			
-		#reorder nodes so selected group is on top of other groups
-			raise()
-			
-			for node in get_parent().get_children():
-				if node is file_node_script:
-					node.raise()
-
-		else:
-			drag_offset = null
-			
-		accept_event()
-	
-	#drag selected node
-	elif drag_offset and event is InputEventMouseMotion:
-		
-		var offset_ori = offset
-		offset += get_local_mouse_position() - drag_offset
-		offset = get_parent().snap(offset)
-
-		#move selected nodes
-#		for node in get_parent().get_children():
+##drag the group node using the icon
+#func _on_Icon_gui_input(event):
 #
-#			if node is GraphNode and node.selected:
+#	#click node
+#	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 #
-#				if node == self:
-#					continue
+#		#drag start
+#		if event.pressed:
 #
+#			selected = true
+#			drag_offset = get_local_mouse_position() #event.position
+#
+#		#reorder nodes so selected group is on top of other groups
+#			raise()
+#
+#			for node in get_parent().get_children():
+#				if node is file_node_script:
+#					node.raise()
+#
+#		else:
+#			drag_offset = null
+#
+#		accept_event()
+#
+#	#drag selected node
+#	elif drag_offset and event is InputEventMouseMotion:
+#
+#		var offset_ori = offset
+#		offset += get_local_mouse_position() - drag_offset
+#		offset = get_parent().snap(offset)
+#
+#		#move selected nodes
+##		for node in get_parent().get_children():
+##
+##			if node is GraphNode and node.selected:
+##
+##				if node == self:
+##					continue
+##
+##				node.offset += offset - offset_ori
+#
+#		#move group nodes, don't if shift or alt is pressed
+#		if not (Input.is_key_pressed(KEY_ALT) or Input.is_key_pressed(KEY_SHIFT)):
+#
+#			for node in children:
 #				node.offset += offset - offset_ori
-
-		#move group nodes, don't if shift or alt is pressed
-		if not (Input.is_key_pressed(KEY_ALT) or Input.is_key_pressed(KEY_SHIFT)):
-
-			for node in children:
-				node.offset += offset - offset_ori
-
-		get_parent().dirty = true
-		accept_event()
+#
+#		get_parent().dirty = true
+#		accept_event()

@@ -20,4 +20,5 @@ stretch_mode = 4
 margin_left = 4.0
 margin_right = 16.0
 margin_bottom = 20.0
+
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

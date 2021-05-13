@@ -12,7 +12,9 @@ export(String) var script_name
 onready var main_resource = $VB/Resource
 onready var script_resource = $VB/Script
 
-var last_offset #used for undo move
+var drag_start #used for undo move
+
+var undo_id
 
 func _ready():
 	
