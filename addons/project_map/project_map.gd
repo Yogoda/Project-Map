@@ -5,6 +5,7 @@ var file_node = preload("res://addons/project_map/pm_file_node.tscn")
 var file_node_script = preload("res://addons/project_map/pm_file_node.gd")
 var group_node = preload("res://addons/project_map/pm_group_node.tscn")
 var group_node_script = preload("res://addons/project_map/pm_group_node.gd")
+var common_node_script = preload("res://addons/project_map/pm_common_node.gd")
 
 var comment_node = preload("res://addons/project_map/pm_comment_node.tscn")
 var comment_node_script = preload("res://addons/project_map/pm_comment_node.gd")
@@ -44,9 +45,6 @@ func _enter_tree():
 	file_system_dock.connect("file_removed", self, "_on_file_removed")
 	file_system_dock.connect("files_moved", self, "_on_file_moved")
 
-#func _get_unique_id():
-#
-#	return OS.get_ticks_msec()
 
 #snap vector to grid
 func snap(pos:Vector2):
@@ -75,8 +73,11 @@ func _ready():
 	
 	for node in get_children():
 		
-		if node is CommonNode:
+		if node is common_node_script:
 			node.connect("end_node_move", self, "_on_end_node_move")
+		
+		if node is group_node_script:
+			node.set_children()
 
 
 func _on_file_removed(file_path):

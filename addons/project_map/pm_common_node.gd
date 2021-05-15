@@ -34,17 +34,15 @@ func _on_Icon_gui_input(event):
 					node.raise()
 
 		else:
-#			print("drag stopped")
+
 			emit_signal("end_node_move") 
 			dragging = false
-#			drag_start = null
 			
 		accept_event()
 	
 	#drag selected node
 	elif dragging and event is InputEventMouseMotion:
 		
-#		var offset_ori = offset
 		offset += get_local_mouse_position() - mouse_drag_start
 		
 		if snap:

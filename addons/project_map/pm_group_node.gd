@@ -1,5 +1,5 @@
 tool
-extends CommonNode
+extends "res://addons/project_map/pm_common_node.gd"
 
 export(String) var group_name = "Group (click to edit)"
 
@@ -21,16 +21,12 @@ func _enter_tree():
 	get_node(header).text = group_name
 	
 
-func _ready():
-
-	#need to wait for group position to be set
-	yield(get_tree(), "idle_frame")
-	children = get_group_nodes()
-
-
 func init():
 	pass
 
+func set_children():
+	
+	children = get_group_nodes()
 
 func _on_GraphNode_resize_request(new_minsize:Vector2):
 
@@ -98,53 +94,20 @@ func on_file_node_moved(node):
 		if children.has(node):
 			children.erase(node)
 
-
 ##drag the group node using the icon
-#func _on_Icon_gui_input(event):
-#
-#	#click node
-#	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-#
-#		#drag start
-#		if event.pressed:
-#
-#			selected = true
-#			drag_offset = get_local_mouse_position() #event.position
-#
-#		#reorder nodes so selected group is on top of other groups
-#			raise()
-#
-#			for node in get_parent().get_children():
-#				if node is file_node_script:
-#					node.raise()
-#
-#		else:
-#			drag_offset = null
-#
-#		accept_event()
-#
-#	#drag selected node
-#	elif drag_offset and event is InputEventMouseMotion:
-#
-#		var offset_ori = offset
-#		offset += get_local_mouse_position() - drag_offset
-#		offset = get_parent().snap(offset)
-#
-#		#move selected nodes
-##		for node in get_parent().get_children():
-##
-##			if node is GraphNode and node.selected:
-##
-##				if node == self:
-##					continue
-##
-##				node.offset += offset - offset_ori
-#
-#		#move group nodes, don't if shift or alt is pressed
-#		if not (Input.is_key_pressed(KEY_ALT) or Input.is_key_pressed(KEY_SHIFT)):
-#
-#			for node in children:
-#				node.offset += offset - offset_ori
-#
-#		get_parent().dirty = true
-#		accept_event()
+func _on_Icon_gui_input(event):
+	
+	var offset_ori = offset
+	
+	._on_Icon_gui_input(event)
+	
+	if dragging and event is InputEventMouseMotion:
+
+		#move group nodes, don't if shift or alt is pressed
+		if not (Input.is_key_pressed(KEY_ALT) or Input.is_key_pressed(KEY_SHIFT)):
+
+			for node in children:
+				node.offset += offset - offset_ori #offset - drag_start
+
+	pass
+
