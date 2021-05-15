@@ -10,16 +10,21 @@ Click on the nodes to access the scenes/scripts.
 
 ### Group nodes
 
-Provides a visual grouping, no functionality.
+Provides a visual grouping.
 Click on "Add Group" button, then click on graph to create a group node.
 
-Drag the icon to move the node.
-Press ALT while dragging to move the children at the same time.
+Drag the icon to move the group and children.
+Press ALT while dragging to only move the group node.
 
 You can resize it with the lower right handle.
-Selected it by dragging a rect and press delete to delete it
 
 ![Screenshot](screenshots/group_nodes.png)
+
+### Comment nodes
+
+Click on "Add Comment" button, then click on graph to create a comment node.
+
+Use the handle to resize according to the text. The handle only appears when hovering the text.
 
 # Changelog
 
@@ -27,6 +32,7 @@ Selected it by dragging a rect and press delete to delete it
   - Add directory node
   - Add comment node
   - Add undo/redo
+  - Improve group node handling
 
 ## 1.2 
 - Add group node
