@@ -23,6 +23,11 @@ Selected it by dragging a rect and press delete to delete it
 
 # Changelog
 
+## 1.3
+  - Add directory node
+  - Add comment node
+  - Add undo/redo
+
 ## 1.2 
 - Add group node
 - Save file node data to improve loading time
