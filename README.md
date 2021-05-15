@@ -13,6 +13,8 @@ Click on the nodes to access the scenes/scripts.
 Provides a visual grouping.
 Click on "Add Group" button, then click on graph to create a group node.
 
+Drag file nodes to add them to the group.
+
 Drag the icon to move the group and children.
 Press ALT while dragging to only move the group node.
 
