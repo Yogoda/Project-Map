@@ -6,6 +6,8 @@ Simply drag and drop files you need to access often into the graph.
 
 Click on the nodes to access the scenes/scripts.
 
+Drag the node icons to move the nodeds.
+
 ![Screenshot](screenshots/project_view.png)
 
 ### Group nodes
