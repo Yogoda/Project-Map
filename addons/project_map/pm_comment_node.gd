@@ -53,8 +53,6 @@ func resize(size):
 	
 	rect_min_size = comment_rect
 	rect_size = comment_rect
-	
-	get_parent().dirty = true
 
 
 func _on_GraphNode_resize_request(new_minsize:Vector2):
