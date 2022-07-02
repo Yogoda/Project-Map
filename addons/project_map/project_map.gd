@@ -216,7 +216,7 @@ func save():
 		undo_redo.clear_history()
 
 
-func _on_GraphEdit_delete_nodes_request():
+func _on_GraphEdit_delete_nodes_request(nodes = []):
 	
 	undo_redo.create_action("Delete nodes")
 	
