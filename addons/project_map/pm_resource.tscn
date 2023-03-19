@@ -1,24 +1,20 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://b84242pbtpwv4"]
 
-[ext_resource path="res://addons/project_map/pm_resource.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://addons/project_map/pm_resource.gd" id="1"]
 
 [node name="HB" type="HBoxContainer"]
-margin_left = 8.0
-margin_top = 4.0
-margin_right = 78.0
-margin_bottom = 24.0
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 78.0
+offset_bottom = 24.0
+script = ExtResource("1")
 
 [node name="Icon" type="TextureRect" parent="."]
-margin_bottom = 20.0
+layout_mode = 2
 stretch_mode = 4
 
 [node name="Button" type="Button" parent="."]
-margin_left = 4.0
-margin_right = 16.0
-margin_bottom = 20.0
+layout_mode = 2
+text = "Text"
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

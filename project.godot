@@ -6,25 +6,16 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "GraphNode",
-"class": "CommonNode",
-"language": "GDScript",
-"path": "res://addons/project_map/pm_common_node.gd"
-} ]
-_global_script_class_icons={
-"CommonNode": ""
-}
+config_version=5
 
 [application]
 
 config/name="Project Map"
+config/features=PackedStringArray("4.0")
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/editor_icon_previewer/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/project_map/plugin.cfg" )
+enabled=PackedStringArray("res://addons/project_map/plugin.cfg")
 
 [rendering]
 

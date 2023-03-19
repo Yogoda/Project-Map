@@ -11,9 +11,9 @@ bg_color = Color( 0.2, 0.231373, 0.309804, 1 )
 [sub_resource type="StyleBoxEmpty" id=3]
 
 [node name="ProjectMap" type="GraphEdit"]
-margin_right = 898.0
-margin_bottom = 685.0
-rect_min_size = Vector2( 500, 500 )
+offset_right = 898.0
+offset_bottom = 685.0
+custom_minimum_size = Vector2( 500, 500 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/bg = SubResource( 1 )
@@ -26,13 +26,13 @@ __meta__ = {
 }
 
 [node name="CommentNode" parent="." instance=ExtResource( 1 )]
-margin_left = 359.0
-margin_top = -96.0
-margin_right = 854.0
-margin_bottom = 259.0
-rect_min_size = Vector2( 495, 355 )
+offset_left = 359.0
+offset_top = -96.0
+offset_right = 854.0
+offset_bottom = 259.0
+custom_minimum_size = Vector2( 495, 355 )
 mouse_filter = 1
-custom_styles/commentfocus = SubResource( 2 )
+custom_styles/comment_focus = SubResource( 2 )
 custom_styles/comment = SubResource( 3 )
 offset = Vector2( 224, -138 )
 comment_text = "Welcome to Project Map

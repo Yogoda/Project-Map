@@ -1,25 +1,26 @@
-tool
-extends "res://addons/project_map/pm_common_node.gd"
+@tool
+class_name PMCommentNode
+extends PMCommonNode
 
 var icon = NodePath("MarginContainer/HBox/Icon")
 
-export(String) var comment_text = "Comment \n\n Use the handle to resize"
-export(Vector2) var comment_rect = Vector2(400, 200)
+@export var comment_text: String = "Comment \n\n Use the handle to resize"
+@export var comment_rect: Vector2 = Vector2(400, 200)
 
-onready var text_node = get_node("MarginContainer/HBox/TextBox")
+@onready var text_node = get_node("MarginContainer/HBox/TextBox")
 
 var last_text:String = ""
 
 func _enter_tree():
 	
-	connect("resize_request", self, "_on_GraphNode_resize_request")
-	get_node(icon).texture = get_icon("MultiLine", "EditorIcons")
+	connect("resize_request",Callable(self,"_on_GraphNode_resize_request"))
+	get_node(icon).texture = get_theme_icon("MultiLine", "EditorIcons")
 	
-	connect("mouse_entered", self, "_on_Node_mouse_entered")
-	connect("mouse_exited", self, "_on_Node_mouse_exited")
+	connect("mouse_entered",Callable(self,"_on_Node_mouse_entered"))
+	connect("mouse_exited",Callable(self,"_on_Node_mouse_exited"))
 	
-	rect_min_size = Vector2(50,50)
-	rect_size = Vector2(50,50)
+	custom_minimum_size = Vector2(50,50)
+	size = Vector2(50,50)
 	
 func _on_Node_mouse_entered():
 	
@@ -48,11 +49,11 @@ func resize(size):
 	
 	comment_rect = size
 
-	$MarginContainer.rect_min_size = Vector2(comment_rect.x - 60, comment_rect.y - 40)
-	$MarginContainer.rect_size = Vector2(comment_rect.x - 60, comment_rect.y - 40)
+	$MarginContainer.custom_minimum_size = Vector2(comment_rect.x - 60, comment_rect.y - 40)
+	$MarginContainer.size = Vector2(comment_rect.x - 60, comment_rect.y - 40)
 	
-	rect_min_size = comment_rect
-	rect_size = comment_rect
+	custom_minimum_size = comment_rect
+	size = comment_rect
 
 
 func _on_GraphNode_resize_request(new_minsize:Vector2):

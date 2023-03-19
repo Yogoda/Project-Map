@@ -1,6 +1,6 @@
 extends GraphNode
 
-class_name CommonNode
+class_name PMCommonNode
 
 signal end_node_move
 
@@ -16,18 +16,18 @@ var dragging: = false
 func _on_Icon_gui_input(event):
 	
 	#click node
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 	
 		#drag start
 		if event.pressed:
 			
 			selected = true
-			drag_start = offset
+			drag_start = position_offset
 			mouse_drag_start = get_local_mouse_position()
 			dragging = true
 			
-		#reorder nodes so selected group is on top of other groups
-			raise()
+			#reorder nodes so selected group is on top of other groups
+			move_to_front()
 			
 			for node in get_parent().get_children():
 				if node is file_node_script:
@@ -43,10 +43,10 @@ func _on_Icon_gui_input(event):
 	#drag selected node
 	elif dragging and event is InputEventMouseMotion:
 		
-		offset += get_local_mouse_position() - mouse_drag_start
+		position_offset += get_local_mouse_position() - mouse_drag_start
 		
 		if snap:
-			offset = get_parent().snap(offset)
+			position_offset = get_parent().snap(position_offset)
 
 		get_parent().dirty = true
 		accept_event()

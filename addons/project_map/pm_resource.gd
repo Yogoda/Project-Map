@@ -1,4 +1,5 @@
-tool
+@tool
+class_name PMResource
 extends HBoxContainer
 
 signal resource_activated(pm_resource)
@@ -18,8 +19,8 @@ func _ready():
 
 
 func set_icon(icon_class):
-	
-	$Icon.texture = get_icon(icon_class, "EditorIcons")
+
+	$Icon.texture = get_theme_icon(icon_class, "EditorIcons")
 	
 	if icon_class == "Folder":
 		$Icon.modulate = Color("83a3d2")
@@ -41,34 +42,34 @@ func init(resource_path):
 	
 	self.resource_path = resource_path
 
-	if icon_class.empty():
+	if icon_class.is_empty():
 		get_resource_info(resource_path)
 		
 	set_name(resource_path)
 
 	set_icon(icon_class)
 	
-	if not script_path.empty():
+	if not script_path.is_empty():
 		pass
 
 
 func get_resource_info(resource_path):
 	
-	var dir = Directory.new()
-	
-	if dir.dir_exists(resource_path):
+	var dir = DirAccess.open(resource_path)
+
+	if dir:
 		resource_type = TYPE_DIR
 		icon_class = "Folder"
-		
+
 	else:
 		
 		var resource = ResourceLoader.load(resource_path)
 	
 		if resource is PackedScene:
 
-			var instance = resource.instance()
+			var instance = resource.instantiate()
 			
-			if instance is Spatial:
+			if instance is Node3D:
 				resource_type = TYPE_3D
 			else:
 				resource_type = TYPE_2D
@@ -98,7 +99,7 @@ func get_resource_name(resource_path):
 
 	var name = split.pop_back()
 	
-	if name.empty():
+	if name.is_empty():
 		name = split.pop_back()
 		
 	return name

@@ -1,16 +1,17 @@
-tool
+@tool
+class_name PMFileNode
 extends GraphNode
 
 #uses exported variables so that data can be saved
-export var path:String
+@export var path:String
 
-export(int) var resource_type
-export(String) var icon_class
-export(String) var script_path
-export(String) var script_name
+@export var resource_type: int
+@export var icon_class: String
+@export var script_path: String
+@export var script_name: String
 
-onready var main_resource = $VB/Resource
-onready var script_resource = $VB/Script
+@onready var main_resource = $VB/Resource
+@onready var script_resource = $VB/Script
 
 var drag_start #used for undo move
 
@@ -18,8 +19,8 @@ var undo_id
 
 func _ready():
 	
-	main_resource.connect("resource_activated", self, "_on_resource_activated")
-	script_resource.connect("resource_activated", self, "_on_resource_activated")
+	main_resource.connect("resource_activated",Callable(self,"_on_resource_activated"))
+	script_resource.connect("resource_activated",Callable(self,"_on_resource_activated"))
 	
 	var nde_resource = main_resource
 	

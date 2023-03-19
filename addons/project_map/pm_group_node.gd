@@ -1,7 +1,8 @@
-tool
-extends "res://addons/project_map/pm_common_node.gd"
+@tool
+class_name PMGroupNode
+extends PMCommonNode
 
-export(String) var group_name = "Group (click to edit)"
+@export var group_name: String = "Group (click to edit)"
 
 var icon = NodePath("MarginContainer/HBoxContainer/Icon")
 var header = NodePath("MarginContainer/HBoxContainer/Title")
@@ -15,8 +16,8 @@ var children = []
 
 func _enter_tree():
 	
-	connect("resize_request", self, "_on_GraphNode_resize_request")
-	get_node(icon).texture = get_icon("WindowDialog", "EditorIcons")
+	connect("resize_request",Callable(self,"_on_GraphNode_resize_request"))
+	get_node(icon).texture = get_theme_icon("Window", "EditorIcons")
 	
 	get_node(header).text = group_name
 	
@@ -32,8 +33,8 @@ func _on_GraphNode_resize_request(new_minsize:Vector2):
 
 	new_minsize = get_parent().snap(new_minsize)
 	
-	rect_min_size = new_minsize
-	rect_size = new_minsize
+	custom_minimum_size = new_minsize
+	size = new_minsize
 	
 	get_parent().dirty = true
 
@@ -56,7 +57,7 @@ func _on_Title_focus_exited():
 #select text when clicking on title
 func _on_Title_gui_input(event):
 	
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 	
 		if event.pressed:
 			accept_event()
@@ -97,9 +98,9 @@ func on_file_node_moved(node):
 ##drag the group node using the icon
 func _on_Icon_gui_input(event):
 	
-	var offset_ori = offset
+	var offset_ori = position_offset
 	
-	._on_Icon_gui_input(event)
+	super._on_Icon_gui_input(event)
 	
 	if dragging and event is InputEventMouseMotion:
 
@@ -107,7 +108,7 @@ func _on_Icon_gui_input(event):
 		if not (Input.is_key_pressed(KEY_ALT) or Input.is_key_pressed(KEY_SHIFT)):
 
 			for node in children:
-				node.offset += offset - offset_ori #offset - drag_start
+				node.position_offset += position_offset - offset_ori #offset - drag_start
 
 	pass
 
