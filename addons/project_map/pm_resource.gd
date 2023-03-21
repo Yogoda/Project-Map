@@ -26,14 +26,12 @@ func set_icon(icon_class):
 		$Icon.modulate = Color("83a3d2")
 
 
-func set_name(resource_path):
+func set_resource_name(resource_path):
 	
-	if not resource_name:
-		
-		resource_name = get_resource_name(resource_path)
-		
-		if resource_name.find("::") >= 0:
-			resource_name = "built-in script"
+	resource_name = get_resource_name(resource_path)
+	
+	if resource_name.find("::") >= 0:
+		resource_name = "built-in script"
 			
 	$Button.text = resource_name
 
@@ -45,7 +43,7 @@ func init(resource_path):
 	if icon_class.is_empty():
 		get_resource_info(resource_path)
 		
-	set_name(resource_path)
+	set_resource_name(resource_path)
 
 	set_icon(icon_class)
 	

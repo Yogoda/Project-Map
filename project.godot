@@ -15,7 +15,7 @@ config/features=PackedStringArray("4.0")
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/project_map/plugin.cfg")
+enabled=PackedStringArray("res://addons/project_map/plugin.cfg", "res://addons/editor_icon_previewer/plugin.cfg")
 
 [rendering]
 

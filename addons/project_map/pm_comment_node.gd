@@ -14,7 +14,7 @@ var last_text:String = ""
 func _enter_tree():
 	
 	connect("resize_request",Callable(self,"_on_GraphNode_resize_request"))
-	get_node(icon).texture = get_theme_icon("MultiLine", "EditorIcons")
+	get_node(icon).texture = get_theme_icon("TripleBar", "EditorIcons")
 	
 	connect("mouse_entered",Callable(self,"_on_Node_mouse_entered"))
 	connect("mouse_exited",Callable(self,"_on_Node_mouse_exited"))
@@ -79,7 +79,7 @@ func _on_TextBox_text_changed():
 
 func _on_TextBox_focus_exited():
 	
-	var undo_redo:UndoRedo = get_parent().undo_redo
+	var undo_redo:EditorUndoRedoManager = get_parent().undo_redo
 	
 	undo_redo.create_action("Change text")
 	

@@ -31,7 +31,7 @@ func _on_Icon_gui_input(event):
 			
 			for node in get_parent().get_children():
 				if node is file_node_script:
-					node.raise()
+					node.move_to_front()
 
 		else:
 

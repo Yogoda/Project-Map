@@ -213,8 +213,8 @@ func save():
 		
 		dirty = false
 		
-	if undo_redo:
-		undo_redo.clear_history()
+#	if undo_redo:
+#		undo_redo.clear_history()
 
 
 func _on_GraphEdit_delete_nodes_request(nodes = []):
